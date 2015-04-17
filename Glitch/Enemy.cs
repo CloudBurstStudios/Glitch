@@ -14,11 +14,22 @@ namespace Glitch
     class Enemy : Entity
     {
         private Bullet enemyBullet;
+        private Texture2D enemyTexture;
         SpriteEffects spriteEffects;
+
+
+        // property
+        public Bullet Bullet
+        {
+            get { return enemyBullet; }
+            set { enemyBullet = value; }
+        }
         //constructor
-        public Enemy(Vector2 pos, int dir, int hth, int lvs, int dam, Bullet b):base(pos, dir, hth, lvs, dam)
+        public Enemy(Vector2 pos, Rectangle cd, int dir, int hth, int lvs, int dam, Bullet b, Texture2D et)
+            : base(pos, cd, dir, hth, lvs, dam)
         {
             enemyBullet = b;
+            enemyTexture = et;
         }
 
         public override void Move()

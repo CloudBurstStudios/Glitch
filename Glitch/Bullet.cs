@@ -15,6 +15,7 @@ namespace Glitch
     {
         //attribute and property for if the bullet is active
         protected bool isActive;
+        protected bool isPlayerBullet;
 
         public bool IsActive
         {
@@ -22,10 +23,17 @@ namespace Glitch
             set { isActive = value; }
         }
 
+        public bool IsPlayerBullet
+        {
+            get { return isPlayerBullet; }
+        }
+
         //constructor
-        public Bullet(Vector2 pos, int dir):base(pos, dir)
+        public Bullet(Vector2 pos, Rectangle cd, int dir, bool ipb)
+            : base(pos, cd, dir)
         {
             isActive = false;
+            isPlayerBullet = ipb;
         }
 
         public override void Move()
@@ -64,7 +72,7 @@ namespace Glitch
             switch (direction)
             {
                 case 0:
-                    sb.Draw(sprite, position, new Rectangle(0, 0, sprite.Width, sprite.Height), Color.White, (float)(Math.PI/2), position, 0.03f, SpriteEffects.None, 0);
+                    sb.Draw(sprite, position, new Rectangle(0, 0, sprite.Width, sprite.Height), Color.White, (float)(Math.PI / 2), position, 0.03f, SpriteEffects.None, 0);
                     break;
                 case 1:
                     sb.Draw(sprite, position, new Rectangle(0, 0, sprite.Width, sprite.Height), Color.White, (float)(Math.PI), position, 0.03f, SpriteEffects.None, 0);
@@ -77,7 +85,7 @@ namespace Glitch
                     break;
             }
             sb.End();
-            
+
         }
     }
 }

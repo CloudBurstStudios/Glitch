@@ -34,10 +34,22 @@ namespace Glitch
         Texture2D line;
         SpriteFont menuFont;
         Trap t;
+        // trap rectangle
+        Rectangle tRect;
         Player p1;
+        // player rectangleft
+        Rectangle p1Rect;
         Enemy e1;
+        // enemy rectangle
+        Rectangle e1Rect;
         Bullet b1;
         Bullet b2;
+        // bullet rectangles
+        Rectangle b1Rect;
+        Rectangle b2Rect;
+        //List<Wall> walls;
+        List<Enemy> enemyList;
+        List<Trap> trapList;
         //List<Wall> walls;
         StartMenu sMenu;
         PauseMenu pMenu;
@@ -53,13 +65,10 @@ namespace Glitch
             sMenu = new StartMenu();
             pMenu = new PauseMenu();
             gMenu = new GameMenu();
-            t = new Trap();
-            b1 = new Bullet(new Vector2(20, 20), 0);
-            b2 = new Bullet(new Vector2(20, 20), 0);
-            p1 = new Player(new Vector2(100, 100), 2, 200, 3, 25, b1);
-            e1 = new Enemy(new Vector2(0, 250), 3, 100, 1, 25, b2);
+            enemyList = new List<Enemy>();
             //for later usage
             //walls = new List<Wall>();
+         
         }
 
         /// <summary>
@@ -93,16 +102,46 @@ namespace Glitch
             //texture to make lines around menu selection
             line = new Texture2D(GraphicsDevice, 1, 1);
             line.SetData<Color>(new Color[] { Color.White });// fill the texture with white
+
+
             menuFont = this.Content.Load<SpriteFont>("mainFont");
-            enemy = this.Content.Load<Texture2D>("enemy");
-            playerFaceDown = this.Content.Load<Texture2D>("player_down");
-            playerFaceUp = this.Content.Load<Texture2D>("player_up");
-            playerFaceRight = this.Content.Load<Texture2D>("player_right");
-            playerFaceLeft = this.Content.Load<Texture2D>("player_left");
-            playerBullet = this.Content.Load<Texture2D>("playerbullet");
+
             enemyBullet = this.Content.Load<Texture2D>("playerbullet");
-            gameWall = this.Content.Load<Texture2D>("Labratory");
+            Rectangle b2Rect = new Rectangle(20, 20, enemyBullet.Width, enemyBullet.Height);
+            b2 = new Bullet(new Vector2(20, 20), b2Rect, 0, false);
+            // b2 = bullet obj (enemy)
+
+            enemy = this.Content.Load<Texture2D>("enemy");
+
+            e1 = new Enemy(new Vector2(0, 250), new Rectangle(0, 250, enemy.Width, enemy.Height), 3, 100, 1, 25, b2, enemy);
+            // e1 = enemy obj
+            enemyList.Add(e1);
+            Rectangle e1Rect = new Rectangle((int)e1.Position.X, (int)e1.Position.Y, enemy.Width, enemy.Height);
+
+            playerBullet = this.Content.Load<Texture2D>("playerbullet");
+            Rectangle b1Rect = new Rectangle(20, 20, playerBullet.Width, playerBullet.Height);
+            b1 = new Bullet(new Vector2(20, 20), b1Rect, 0, true);
+            // b1 = bullet obj (player)
+
+            playerFaceDown = this.Content.Load<Texture2D>("player_down");
+            Rectangle p1Rect = new Rectangle(250, 250, playerFaceDown.Width, playerFaceDown.Height);
+            playerFaceUp = this.Content.Load<Texture2D>("player_up");
+            //Rectangle p1Rect = new Rectangle((int)p1.Position.X, (int)p1.Position.Y, playerFaceUp.Width, playerFaceUp.Height);
+            playerFaceRight = this.Content.Load<Texture2D>("player_right");
+            //Rectangle p1Rect = new Rectangle((int)p1.Position.X, (int)p1.Position.Y, playerFaceRight.Width, playerFaceRight.Height);
+            playerFaceLeft = this.Content.Load<Texture2D>("player_left");
+            //Rectangle p1Rect = new Rectangle((int)p1.Position.X, (int)p1.Position.Y, playerFaceLeft.Width, playerFaceLeft.Height);
+            p1 = new Player(new Vector2(250, 250), p1Rect, 2, 200, 3, 25, b1, playerFaceDown, playerFaceUp, playerFaceLeft, playerFaceRight);
+            // p1 = player obj
+
+
             trap = this.Content.Load<Texture2D>("trap");
+            Rectangle tRect = new Rectangle(1, 1, trap.Width, trap.Height);
+            gameWall = this.Content.Load<Texture2D>("Labratory");
+            t = new Trap();
+            // t = trap obj
+
+            gameWall = this.Content.Load<Texture2D>("Labratory");
         }
 
         /// <summary>
