@@ -38,10 +38,11 @@ namespace Glitch
         Enemy e1;
         Bullet b1;
         Bullet b2;
-        //List<Wall> walls;
         StartMenu sMenu;
         PauseMenu pMenu;
         GameMenu gMenu;
+        WorldGeneration worldGen;
+        ToolLoader tLoader;
 
         public Game1()
             : base()
@@ -58,8 +59,10 @@ namespace Glitch
             b2 = new Bullet(new Vector2(20, 20), 0);
             p1 = new Player(new Vector2(100, 100), 2, 200, 3, 25, b1);
             e1 = new Enemy(new Vector2(0, 250), 3, 100, 1, 25, b2);
-            //for later usage
-            //walls = new List<Wall>();
+            worldGen = new WorldGeneration();
+            tLoader = new ToolLoader();
+            GameVariables.ENEMIES = new List<Enemy>();
+            GameVariables.TRAPS = new List<Trap>();
         }
 
         /// <summary>
@@ -76,6 +79,12 @@ namespace Glitch
             //to be able to use the window width and height in other classes
             GameVariables.WINDOW_HEIGHT = GraphicsDevice.Viewport.Height;
             GameVariables.WINDOW_WIDTH = GraphicsDevice.Viewport.Width;
+
+            //Reading the information from the external tool
+            tLoader.ReadData();
+
+            //World generation call
+            worldGen.GenerateWorld();
         }
 
         /// <summary>

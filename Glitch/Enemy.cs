@@ -13,8 +13,17 @@ namespace Glitch
 {
     class Enemy : Entity
     {
+        //attributes
         private Bullet enemyBullet;
         SpriteEffects spriteEffects;
+        private bool isAlive;
+
+        //properties
+        public bool IsAlive
+        {
+            get { return isAlive; }
+        }
+
         //constructor
         public Enemy(Vector2 pos, int dir, int hth, int lvs, int dam, Bullet b):base(pos, dir, hth, lvs, dam)
         {

@@ -12,7 +12,7 @@ namespace Glitch
         //attributes
         Stream str;
         BinaryReader input;
-        int numRooms = 0;
+        int numRooms = 1;
         int numEnemies = 0;
         int trapDensity = 0;
 

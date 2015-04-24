@@ -54,12 +54,14 @@ namespace Glitch
         }
 
         //constructor
-        public Room()
+        public Room(int pX, int pY)
         {
             up = null;
             down = null;
             left = null;
             right = null;
+            posX = pX;
+            posY = pY;
         }
     }
 }
