@@ -16,7 +16,9 @@ namespace Glitch
         //attributes
         private Bullet enemyBullet;
         private Texture2D enemyTexture;
-        SpriteEffects spriteEffects;
+        private SpriteEffects spriteEffects;
+        private List<Vector2> enemyPositions = new List<Vector2>();
+        private Random rgen = new Random();
 
         private bool isAlive;
 
@@ -37,12 +39,16 @@ namespace Glitch
         }
 
         //constructor
-        public Enemy(Vector2 pos, Rectangle cd, int dir, int hth, int lvs, int dam, Bullet b, Texture2D et)
+        public Enemy(Vector2 pos, Rectangle cd, int dir, int hth, int lvs, int dam, Bullet b)
             : base(pos, cd, dir, hth, lvs, dam)
         {
             enemyBullet = b;
-            enemyTexture = et;
             isAlive = true;
+
+            for (int i = 0; i < GameVariables.NUMBER_OF_ENEMIES; i++)
+            {
+                enemyPositions.Add(new Vector2(rgen.Next(75,921),rgen.Next(20,476)));
+            }
         }
 
         public override void Move()
@@ -83,12 +89,12 @@ namespace Glitch
 
         public override void Draw(Texture2D sprite, SpriteBatch sb)
         {
-            if (isAlive)
-            {
                 sb.Begin();
-                sb.Draw(sprite, position, new Rectangle(0, 0, sprite.Width, sprite.Height), Color.White, 0, position, 0.15f, spriteEffects, 0);
+                for (int i = 0; i < GameVariables.CURRENT_ROOM.NumEnemies; i++)
+                {
+                    sb.Draw(sprite, enemyPositions[i], new Rectangle(0, 0, sprite.Width, sprite.Height), Color.White, 0, position, 0.15f, spriteEffects, 0);
+                }
                 sb.End();
-            }
         }
     }
 }

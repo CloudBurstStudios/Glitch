@@ -18,6 +18,7 @@ namespace Glitch
         //collision rectangle x, y, width, height
         Rectangle colldetect;
 
+
         //properties
         public Vector2 Position
         {

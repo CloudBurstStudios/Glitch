@@ -69,16 +69,11 @@ namespace Glitch
             sMenu = new StartMenu();
             pMenu = new PauseMenu();
             gMenu = new GameMenu();
-
-            worldGen = new WorldGeneration();
             tLoader = new ToolLoader();
             GameVariables.ENEMIES = new List<Enemy>();
             GameVariables.TRAPS = new List<Trap>();
 
-            
-            //for later usage
-            //walls = new List<Wall>();
-         
+            worldGen = new WorldGeneration(e1, t);
 
         }
 
@@ -90,6 +85,7 @@ namespace Glitch
         /// </summary>
         protected override void Initialize()
         {
+            System.Diagnostics.Debug.WriteLine("Initialize");
             // TODO: Add your initialization logic here
             base.Initialize();
             kState = Keyboard.GetState();
@@ -120,49 +116,24 @@ namespace Glitch
             line = new Texture2D(GraphicsDevice, 1, 1);
             line.SetData<Color>(new Color[] { Color.White });// fill the texture with white
 
-
+            //Loading textures to use in game
             menuFont = this.Content.Load<SpriteFont>("mainFont");
-
             enemyBullet = this.Content.Load<Texture2D>("playerbullet");
-            Rectangle b2Rect = new Rectangle(20, 20, enemyBullet.Width, enemyBullet.Height);
-            b2 = new Bullet(new Vector2(20, 20), b2Rect, 0, false);
-            // b2 = bullet obj (enemy)
-
             enemy = this.Content.Load<Texture2D>("enemy");
-
-            e1 = new Enemy(new Vector2(0, 250), new Rectangle(0, 250, enemy.Width, enemy.Height), 3, 100, 1, 25, b2, enemy);
-            // e1 = enemy obj
-            //enemyList.Add(e1);
-            // Rectangle
-            e1Rect = new Rectangle((int)e1.Position.X, (int)e1.Position.Y, enemy.Width, enemy.Height);
-
             playerBullet = this.Content.Load<Texture2D>("playerbullet");
-            // Rectangle
-            b1Rect = new Rectangle(20, 20, playerBullet.Width, playerBullet.Height);
-            b1 = new Bullet(new Vector2(20, 20), b1Rect, 0, true);
-            // b1 = bullet obj (player)
-
             playerFaceDown = this.Content.Load<Texture2D>("player_down");
-            // Rectangle
-            p1Rect = new Rectangle(250, 250, playerFaceDown.Width, playerFaceDown.Height);
             playerFaceUp = this.Content.Load<Texture2D>("player_up");
-            //Rectangle p1Rect = new Rectangle((int)p1.Position.X, (int)p1.Position.Y, playerFaceUp.Width, playerFaceUp.Height);
             playerFaceRight = this.Content.Load<Texture2D>("player_right");
-            //Rectangle p1Rect = new Rectangle((int)p1.Position.X, (int)p1.Position.Y, playerFaceRight.Width, playerFaceRight.Height);
             playerFaceLeft = this.Content.Load<Texture2D>("player_left");
-            //Rectangle p1Rect = new Rectangle((int)p1.Position.X, (int)p1.Position.Y, playerFaceLeft.Width, playerFaceLeft.Height);
-            p1 = new Player(new Vector2(250, 250), p1Rect, 2, 200, 3, 25, b1, playerFaceDown, playerFaceUp, playerFaceLeft, playerFaceRight);
-            // p1 = player obj
-
-
             trap = this.Content.Load<Texture2D>("trap");
-            // Rectangle
-            tRect = new Rectangle(1, 1, trap.Width, trap.Height);
             gameWall = this.Content.Load<Texture2D>("Labratory");
-            t = new Trap(new Vector2(0,0), tRect);
-            // t = trap obj
 
-            gameWall = this.Content.Load<Texture2D>("Labratory");
+            t = new Trap(new Vector2(0, 0), new Rectangle(1, 1, trap.Width, trap.Height));
+            b1 = new Bullet(new Vector2(20, 20), new Rectangle(20, 20, playerBullet.Width, playerBullet.Height), 0, true);
+            b2 = new Bullet(new Vector2(20, 20), new Rectangle(20, 20, enemyBullet.Width, enemyBullet.Height), 0, false);
+            e1 = new Enemy(new Vector2(0, 250), new Rectangle(0, 250, enemy.Width, enemy.Height), 3, 100, 1, 25, b2);
+            p1 = new Player(new Vector2(250, 250), new Rectangle(250, 250, playerFaceDown.Width, playerFaceDown.Height), 2, 200, 3, 25, b1);
+
         }
 
         /// <summary>

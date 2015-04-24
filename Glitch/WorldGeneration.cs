@@ -2,6 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Storage;
+using Microsoft.Xna.Framework.GamerServices;
 
 namespace Glitch
 {
@@ -14,6 +20,18 @@ namespace Glitch
         private Room currentRoom = null;
         private int enemiesLeftToAdd;
         private int enemiesPerRoom;
+        private Enemy defaultEnemy;
+        private Trap defaultTrap;
+        private int enemiesUpper;
+        private int enemiesLower;
+
+        //constructor
+        public WorldGeneration(Enemy en, Trap tr)
+        {
+            defaultEnemy = en;
+            defaultTrap = tr;
+            enemiesLeftToAdd = GameVariables.NUMBER_OF_ENEMIES;
+        }
 
         //method that is called by the program to generate the world
         public void GenerateWorld()
@@ -21,11 +39,25 @@ namespace Glitch
             currentRoom = root;
             Room newRoom;
 
+            //deciding the upper and lower bounds of enemies allowed per room
+            enemiesLower = GameVariables.NUMBER_OF_ENEMIES / GameVariables.NUMBER_OF_ROOMS;
+
+            //if the enemies do not divide evenly into the rooms
+            if (GameVariables.NUMBER_OF_ENEMIES % GameVariables.NUMBER_OF_ROOMS != 0)
+            {
+                enemiesUpper = enemiesLower + 1;
+            }
+            else
+            {
+                enemiesUpper = enemiesLower;
+            }
+
             //Adding rooms to the level
             for (int i = 0; i < GameVariables.NUMBER_OF_ROOMS; i++)
             {
                 newRoom = this.AddRoomToDungeon(rgen.Next(0, 4), currentRoom);
                 currentRoom = newRoom;
+                this.AddEnemies(currentRoom);
             }
             
             //saving the completed room layout to the GameVariables class
@@ -133,9 +165,18 @@ namespace Glitch
         }
 
         //adds enemies to the world
-        public void AddEnemies()
+        public void AddEnemies(Room currentRoom)
         {
 
+
+            for (int i = 0; i < rgen.Next(enemiesLower, enemiesUpper + 1); i++)
+            {
+                if (enemiesLeftToAdd > 0)
+                {
+                    currentRoom.NumEnemies++;
+                    enemiesLeftToAdd--;
+                }
+            }
         }
 
         //adds traps to the world

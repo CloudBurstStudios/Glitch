@@ -15,6 +15,8 @@ namespace Glitch
         private Room down;
         private int posX;
         private int posY;
+        private int numEnemies;
+        private int numTraps;
 
         //properties
         public Room Left
@@ -51,6 +53,18 @@ namespace Glitch
         {
             get { return posY; }
             set { posY = value; }
+        }
+
+        public int NumEnemies
+        {
+            get { return numEnemies; }
+            set { numEnemies = value; }
+        }
+
+        public int NumTraps
+        {
+            get { return numTraps; }
+            set { numTraps = value; }
         }
 
         //constructor
