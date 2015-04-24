@@ -125,6 +125,14 @@ namespace Glitch
             playerFaceUp = this.Content.Load<Texture2D>("player_up");
             playerFaceRight = this.Content.Load<Texture2D>("player_right");
             playerFaceLeft = this.Content.Load<Texture2D>("player_left");
+<<<<<<< HEAD
+=======
+            //Rectangle p1Rect = new Rectangle((int)p1.Position.X, (int)p1.Position.Y, playerFaceLeft.Width, playerFaceLeft.Height);
+            p1 = new Player(new Vector2(250, 250), p1Rect, 2, 5, 3, 25, b1, playerFaceDown, playerFaceUp, playerFaceLeft, playerFaceRight);
+            // p1 = player obj
+
+
+>>>>>>> origin/master
             trap = this.Content.Load<Texture2D>("trap");
             gameWall = this.Content.Load<Texture2D>("Labratory");
 
@@ -206,6 +214,7 @@ namespace Glitch
                 if (p1.CheckCollision(e))
                 {
                     p1.Health--;
+
                     e.IsAlive = false;
                 }
                 if (p1.CheckCollision(e.EnemyBullet))
@@ -216,6 +225,7 @@ namespace Glitch
                 if (e.CheckCollision(p1.Bullet))
                 {
                     e.IsAlive = false;
+                    gMenu.Score++;
                 }
             }
 
@@ -249,6 +259,7 @@ namespace Glitch
                 //draw the background
                 spriteBatch.Begin();
                 spriteBatch.Draw(gameWall, new Rectangle(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), Color.Silver);
+                spriteBatch.DrawString(menuFont, "" + p1.Health, new Vector2(120, 25), Color.Black);
                 spriteBatch.End();
                 //draw the traps
                 t.Draw(trap, spriteBatch);
