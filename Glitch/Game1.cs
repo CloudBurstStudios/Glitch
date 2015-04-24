@@ -49,8 +49,8 @@ namespace Glitch
         Rectangle b1Rect;
         Rectangle b2Rect;
         //List<Wall> walls;
-        List<Enemy> enemyList;
-        List<Trap> trapList;
+        //List<Enemy> enemyList;
+        //List<Trap> trapList;
         //List<Wall> walls;
 
         StartMenu sMenu;
@@ -75,7 +75,7 @@ namespace Glitch
             GameVariables.ENEMIES = new List<Enemy>();
             GameVariables.TRAPS = new List<Trap>();
 
-            enemyList = new List<Enemy>();
+            
             //for later usage
             //walls = new List<Wall>();
          
@@ -132,16 +132,19 @@ namespace Glitch
 
             e1 = new Enemy(new Vector2(0, 250), new Rectangle(0, 250, enemy.Width, enemy.Height), 3, 100, 1, 25, b2, enemy);
             // e1 = enemy obj
-            enemyList.Add(e1);
-            Rectangle e1Rect = new Rectangle((int)e1.Position.X, (int)e1.Position.Y, enemy.Width, enemy.Height);
+            //enemyList.Add(e1);
+            // Rectangle
+            e1Rect = new Rectangle((int)e1.Position.X, (int)e1.Position.Y, enemy.Width, enemy.Height);
 
             playerBullet = this.Content.Load<Texture2D>("playerbullet");
-            Rectangle b1Rect = new Rectangle(20, 20, playerBullet.Width, playerBullet.Height);
+            // Rectangle
+            b1Rect = new Rectangle(20, 20, playerBullet.Width, playerBullet.Height);
             b1 = new Bullet(new Vector2(20, 20), b1Rect, 0, true);
             // b1 = bullet obj (player)
 
             playerFaceDown = this.Content.Load<Texture2D>("player_down");
-            Rectangle p1Rect = new Rectangle(250, 250, playerFaceDown.Width, playerFaceDown.Height);
+            // Rectangle
+            p1Rect = new Rectangle(250, 250, playerFaceDown.Width, playerFaceDown.Height);
             playerFaceUp = this.Content.Load<Texture2D>("player_up");
             //Rectangle p1Rect = new Rectangle((int)p1.Position.X, (int)p1.Position.Y, playerFaceUp.Width, playerFaceUp.Height);
             playerFaceRight = this.Content.Load<Texture2D>("player_right");
@@ -153,9 +156,10 @@ namespace Glitch
 
 
             trap = this.Content.Load<Texture2D>("trap");
-            Rectangle tRect = new Rectangle(1, 1, trap.Width, trap.Height);
+            // Rectangle
+            tRect = new Rectangle(1, 1, trap.Width, trap.Height);
             gameWall = this.Content.Load<Texture2D>("Labratory");
-            t = new Trap();
+            t = new Trap(new Vector2(0,0), tRect);
             // t = trap obj
 
             gameWall = this.Content.Load<Texture2D>("Labratory");
@@ -222,6 +226,37 @@ namespace Glitch
                 }
             }
 
+            // collision detection 
+
+            //player collides with an enemy or enemy bullet
+            foreach (Enemy e in GameVariables.ENEMIES)
+            {
+                //if the player is colliding with an enemy
+                if (p1.CheckCollision(e))
+                {
+                    p1.Health--;
+                    e.IsAlive = false;
+                }
+                if (p1.CheckCollision(e.EnemyBullet))
+                {
+                    p1.Health--;
+                }
+
+                if (e.CheckCollision(p1.Bullet))
+                {
+                    e.IsAlive = false;
+                }
+            }
+
+            //player collides with a trap
+            foreach (Trap t in GameVariables.TRAPS)
+            {
+                if (p1.CheckCollision(t))
+                {
+                    p1.Health--;
+                }
+            }
+
             base.Update(gameTime);
         }
 
@@ -245,7 +280,7 @@ namespace Glitch
                 spriteBatch.Draw(gameWall, new Rectangle(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), Color.Silver);
                 spriteBatch.End();
                 //draw the traps
-                t.DrawTraps(trap, spriteBatch);
+                t.Draw(trap, spriteBatch);
 
                 gMenu.DrawText(spriteBatch, menuFont);
 
@@ -331,6 +366,12 @@ namespace Glitch
                     p1.Fire();
                 }
             }
+        }
+
+        //method stub to detect collisions (code will be moved here later)
+        public void DetectCollisions()
+        {
+
         }
       }
     }

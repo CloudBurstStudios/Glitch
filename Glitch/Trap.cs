@@ -11,14 +11,19 @@ using Microsoft.Xna.Framework.GamerServices;
 
 namespace Glitch
 {
-    class Trap
+    class Trap : GamePiece
     {
         protected Vector2 p1 = new Vector2(500, 340);
         protected Vector2 p2 = new Vector2(200, 300);
         protected Vector2 p3 = new Vector2(120, 152);
         protected Vector2 p4 = new Vector2(300, 68);
         protected Vector2 p5 = new Vector2(570, 88);
-        public void DrawTraps(Texture2D sprite, SpriteBatch sb)
+
+        //constructor
+        public Trap(Vector2 pos, Rectangle cd):base(pos, cd)
+        { }
+
+        public override void Draw(Texture2D sprite, SpriteBatch sb)
         {
             sb.Begin();
             sb.Draw(sprite, p1, Color.White);

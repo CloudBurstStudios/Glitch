@@ -24,12 +24,13 @@ namespace Glitch
         public bool IsAlive
         {
             get { return isAlive; }
+            set { isAlive = value; }
         }
 
 
 
         // property
-        public Bullet Bullet
+        public Bullet EnemyBullet
         {
             get { return enemyBullet; }
             set { enemyBullet = value; }
@@ -41,6 +42,7 @@ namespace Glitch
         {
             enemyBullet = b;
             enemyTexture = et;
+            isAlive = true;
         }
 
         public override void Move()
@@ -81,9 +83,12 @@ namespace Glitch
 
         public override void Draw(Texture2D sprite, SpriteBatch sb)
         {
-            sb.Begin();
-            sb.Draw(sprite, position, new Rectangle(0, 0, sprite.Width, sprite.Height), Color.White, 0, position, 0.15f, spriteEffects, 0);
-            sb.End();
+            if (isAlive)
+            {
+                sb.Begin();
+                sb.Draw(sprite, position, new Rectangle(0, 0, sprite.Width, sprite.Height), Color.White, 0, position, 0.15f, spriteEffects, 0);
+                sb.End();
+            }
         }
     }
 }

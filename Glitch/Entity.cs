@@ -48,13 +48,6 @@ namespace Glitch
         public abstract override void Move();
         public abstract override void Draw(Texture2D sprite, SpriteBatch sb);
 
-        public bool CheckCollision(MoveableGamePiece other)
-        {
-            if (this.CollDetect.Intersects(other.CollDetect))
-            {
-                return true;
-            }
-            return false;
-        }
+
     }
 }

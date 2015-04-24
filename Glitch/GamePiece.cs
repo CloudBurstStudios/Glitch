@@ -37,6 +37,15 @@ namespace Glitch
             colldetect = cd;
         }
 
+        //Method to check for collisions between game pieces
+        public bool CheckCollision(GamePiece other)
+        {
+            if (this.CollDetect.Intersects(other.CollDetect))
+            {
+                return true;
+            }
+            return false;
+        }
 
 
         //Abstract method for drawing GamePieces
