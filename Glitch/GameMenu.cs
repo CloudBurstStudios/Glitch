@@ -14,9 +14,16 @@ namespace Glitch
 {
     class GameMenu
     {
+        
         SpriteEffects spritEffects = SpriteEffects.None;
         bool[] dir = { false, false };
+        private int score = 0;
 
+        public int Score
+        {
+            get { return score; }
+            set { score = value; }
+        }
         /*public void UpdateMenu()
         {
             kState = Keyboard.GetState();
@@ -80,7 +87,7 @@ namespace Glitch
             spriteBatch.Begin();
 
             spriteBatch.DrawString(font,
-                "Health:",
+                "Health: ",
                 new Vector2(25, 25),
                 Color.Black,
                 0f,
@@ -89,7 +96,7 @@ namespace Glitch
                 spritEffects,
                 0);
 
-            spriteBatch.DrawString(font,
+            /*spriteBatch.DrawString(font,
                 "Laser Charge:",
                 new Vector2(25, 400),
                 Color.Black,
@@ -97,10 +104,10 @@ namespace Glitch
                 new Vector2(0, 0),
                 1f,
                 spritEffects,
-                0);
+                0);*/
 
             spriteBatch.DrawString(font,
-                "Score: ",
+                "Score: " + score,
                 new Vector2(600, 25),
                 Color.Black,
                 0f,
