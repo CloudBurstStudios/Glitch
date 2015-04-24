@@ -17,7 +17,7 @@ namespace Glitch
         private Bullet enemyBullet;
         private Texture2D enemyTexture;
         SpriteEffects spriteEffects;
-<<<<<<< HEAD
+
         private bool isAlive;
 
         //properties
@@ -26,7 +26,6 @@ namespace Glitch
             get { return isAlive; }
         }
 
-=======
 
 
         // property
@@ -35,7 +34,7 @@ namespace Glitch
             get { return enemyBullet; }
             set { enemyBullet = value; }
         }
->>>>>>> origin/master
+
         //constructor
         public Enemy(Vector2 pos, Rectangle cd, int dir, int hth, int lvs, int dam, Bullet b, Texture2D et)
             : base(pos, cd, dir, hth, lvs, dam)

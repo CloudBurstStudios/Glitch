@@ -44,8 +44,7 @@ namespace Glitch
         Rectangle e1Rect;
         Bullet b1;
         Bullet b2;
-<<<<<<< HEAD
-=======
+
         // bullet rectangles
         Rectangle b1Rect;
         Rectangle b2Rect;
@@ -53,7 +52,7 @@ namespace Glitch
         List<Enemy> enemyList;
         List<Trap> trapList;
         //List<Wall> walls;
->>>>>>> origin/master
+
         StartMenu sMenu;
         PauseMenu pMenu;
         GameMenu gMenu;
@@ -70,22 +69,17 @@ namespace Glitch
             sMenu = new StartMenu();
             pMenu = new PauseMenu();
             gMenu = new GameMenu();
-<<<<<<< HEAD
-            t = new Trap();
-            b1 = new Bullet(new Vector2(20, 20), 0);
-            b2 = new Bullet(new Vector2(20, 20), 0);
-            p1 = new Player(new Vector2(100, 100), 2, 200, 3, 25, b1);
-            e1 = new Enemy(new Vector2(0, 250), 3, 100, 1, 25, b2);
+
             worldGen = new WorldGeneration();
             tLoader = new ToolLoader();
             GameVariables.ENEMIES = new List<Enemy>();
             GameVariables.TRAPS = new List<Trap>();
-=======
+
             enemyList = new List<Enemy>();
             //for later usage
             //walls = new List<Wall>();
          
->>>>>>> origin/master
+
         }
 
         /// <summary>
