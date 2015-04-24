@@ -15,7 +15,7 @@ namespace Glitch
     class Wall : GamePiece
     {
         //constructor
-        public Wall(Vector2 pos) : base(pos)
+        public Wall(Vector2 pos, Rectangle cd) : base(pos, cd)
         { }
 
 

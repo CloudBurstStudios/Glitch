@@ -15,6 +15,8 @@ namespace Glitch
     {
         //attributes
         protected Vector2 position;
+        //collision rectangle x, y, width, height
+        Rectangle colldetect;
 
         //properties
         public Vector2 Position
@@ -22,20 +24,29 @@ namespace Glitch
             get { return position; }
             set { position = value; }
         }
+        public Rectangle CollDetect
+        {
+            get { return colldetect; }
+            set { colldetect = value; }
+        }
 
-        //constructor
-        public GamePiece(Vector2 pos)
+        //constructor                                                                         
+        public GamePiece(Vector2 pos, Rectangle cd)
         {
             position = pos;
+            colldetect = cd;
         }
 
-        //Method that gets whether the GamePiece is colliding with another
-        public bool IsColliding(GamePiece gp)
-        {
-            return gp.Position == this.Position;
-        }
+
 
         //Abstract method for drawing GamePieces
         public abstract void Draw(Texture2D sprite, SpriteBatch sb);
+
+        public override string ToString()
+        {
+            return "rectangle: " + colldetect;
+        }
+
     }
 }
+

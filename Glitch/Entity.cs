@@ -11,11 +11,12 @@ using Microsoft.Xna.Framework.GamerServices;
 
 namespace Glitch
 {
-    abstract class Entity:MoveableGamePiece
+    abstract class Entity : MoveableGamePiece
     {
         //attributes
         protected int health;
         protected int lives;
+        private bool colliding;
 
         //properties
         public int Health
@@ -30,8 +31,15 @@ namespace Glitch
             set { lives = value < 0 ? 0 : value; }
         }
 
+        public Boolean IsColliding
+        {
+            get { return colliding; }
+            set { colliding = value; }
+        }
+
         //constructor
-        public Entity(Vector2 pos, int dir, int hth, int lvs, int dam):base(pos, dir)
+        public Entity(Vector2 pos, Rectangle cd, int dir, int hth, int lvs, int dam)
+            : base(pos, cd, dir)
         {
             health = hth;
             lives = lvs;
@@ -40,5 +48,13 @@ namespace Glitch
         public abstract override void Move();
         public abstract override void Draw(Texture2D sprite, SpriteBatch sb);
 
+        public bool CheckCollision(MoveableGamePiece other)
+        {
+            if (this.CollDetect.Intersects(other.CollDetect))
+            {
+                return true;
+            }
+            return false;
+        }
     }
 }

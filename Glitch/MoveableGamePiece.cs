@@ -29,7 +29,7 @@ namespace Glitch
         }
 
         //constructor
-        public MoveableGamePiece(Vector2 pos, int dir):base(pos)
+        public MoveableGamePiece(Vector2 pos, Rectangle cd, int dir):base(pos, cd)
         {
             direction = dir;
         }
