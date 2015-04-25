@@ -15,7 +15,6 @@ namespace Glitch
     {
         //attributes
         private Bullet enemyBullet;
-        private Texture2D enemyTexture;
         private SpriteEffects spriteEffects;
         private List<Vector2> enemyPositions = new List<Vector2>();
         private Random rgen = new Random();

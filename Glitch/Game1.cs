@@ -32,6 +32,7 @@ namespace Glitch
         Texture2D gameWall;
         Texture2D trap;
         Texture2D line;
+        Random rgen;
         SpriteFont menuFont;
         Trap t;
         // trap rectangle
@@ -70,6 +71,7 @@ namespace Glitch
             pMenu = new PauseMenu();
             gMenu = new GameMenu();
             tLoader = new ToolLoader();
+            rgen = new Random();
             GameVariables.ENEMIES = new List<Enemy>();
             GameVariables.TRAPS = new List<Trap>();
 
@@ -131,8 +133,8 @@ namespace Glitch
             t = new Trap(new Vector2(0, 0), new Rectangle(1, 1, trap.Width, trap.Height));
             b1 = new Bullet(new Vector2(20, 20), new Rectangle(20, 20, playerBullet.Width, playerBullet.Height), 0, true);
             b2 = new Bullet(new Vector2(20, 20), new Rectangle(20, 20, enemyBullet.Width, enemyBullet.Height), 0, false);
-            e1 = new Enemy(new Vector2(0, 250), new Rectangle(0, 250, enemy.Width, enemy.Height), 3, 100, 1, 25, b2);
-            p1 = new Player(new Vector2(250, 250), new Rectangle(250, 250, playerFaceDown.Width, playerFaceDown.Height), 2, 200, 3, 25, b1);
+            e1 = new Enemy(new Vector2(rgen.Next(75,920), rgen.Next(20,475)), new Rectangle(0, 250, enemy.Width, enemy.Height), 3, 1, 1, 1, b2);
+            p1 = new Player(new Vector2(250, 250), new Rectangle(250, 250, playerFaceDown.Width, playerFaceDown.Height), 2, 5, 3, 1, b1);
 
         }
 
@@ -174,10 +176,10 @@ namespace Glitch
                 b1.Move();
                 b2.Move();
 
-                if (e1.Position.X == 765)
+                /*if (e1.Position.X == 765)
                 {
                     e1.Fire();
-                }
+                }*/
 
 
             }
@@ -274,18 +276,20 @@ namespace Glitch
                         p1.Draw(playerFaceLeft, spriteBatch);
                         break;
                 }
-
-                //switch statement for enemy movement
-                switch (e1.Direction)
+                for (int i = 0; i < GameVariables.CURRENT_ROOM.NumEnemies; i++)
                 {
-                    case 1: //right
-                        e1.Draw(enemy, spriteBatch);
-                        e1.Move();
-                        break;
-                    case 3: //left
-                        e1.Draw(enemy, spriteBatch);
-                        e1.Move();
-                        break;
+                    //switch statement for enemy movement
+                    switch (GameVariables.ENEMIES[i].Direction)
+                    {
+                        case 1: //right
+                            GameVariables.ENEMIES[i].Draw(enemy, spriteBatch);
+                            GameVariables.ENEMIES[i].Move();
+                            break;
+                        case 3: //left
+                            GameVariables.ENEMIES[i].Draw(enemy, spriteBatch);
+                            GameVariables.ENEMIES[i].Move();
+                            break;
+                    }
                 }
 
                 //drawing the bullets

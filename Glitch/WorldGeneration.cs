@@ -167,8 +167,6 @@ namespace Glitch
         //adds enemies to the world
         public void AddEnemies(Room currentRoom)
         {
-
-
             for (int i = 0; i < rgen.Next(enemiesLower, enemiesUpper + 1); i++)
             {
                 if (enemiesLeftToAdd > 0)
