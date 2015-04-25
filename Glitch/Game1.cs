@@ -28,7 +28,7 @@ namespace Glitch
         Texture2D playerFaceLeft;
         Texture2D playerBullet;
         Texture2D enemyBullet;
-        Texture2D enemy;
+        Texture2D enemyFaceLeft;
         Texture2D gameWall;
         Texture2D trap;
         Texture2D line;
@@ -121,7 +121,7 @@ namespace Glitch
             //Loading textures to use in game
             menuFont = this.Content.Load<SpriteFont>("mainFont");
             enemyBullet = this.Content.Load<Texture2D>("playerbullet");
-            enemy = this.Content.Load<Texture2D>("enemy");
+            enemyFaceLeft = this.Content.Load<Texture2D>("enemyFaceLeft");
             playerBullet = this.Content.Load<Texture2D>("playerbullet");
             playerFaceDown = this.Content.Load<Texture2D>("player_down");
             playerFaceUp = this.Content.Load<Texture2D>("player_up");
@@ -133,8 +133,8 @@ namespace Glitch
             t = new Trap(new Vector2(0, 0), new Rectangle(1, 1, trap.Width, trap.Height));
             b1 = new Bullet(new Vector2(20, 20), new Rectangle(20, 20, playerBullet.Width, playerBullet.Height), 0, true);
             b2 = new Bullet(new Vector2(20, 20), new Rectangle(20, 20, enemyBullet.Width, enemyBullet.Height), 0, false);
-            e1 = new Enemy(new Vector2(rgen.Next(75,920), rgen.Next(20,475)), new Rectangle(0, 250, enemy.Width, enemy.Height), 3, 1, 1, 1, b2);
-            p1 = new Player(new Vector2(250, 250), new Rectangle(250, 250, playerFaceDown.Width, playerFaceDown.Height), 2, 5, 3, 1, b1);
+            e1 = new Enemy(new Vector2(rgen.Next(75,920), rgen.Next(20,475)), new Rectangle(0, 250, enemyFaceLeft.Width, enemyFaceLeft.Height), 3, 1, 1, 1, b2);
+            p1 = new Player(new Vector2(500, 175), new Rectangle(250, 250, playerFaceDown.Width, playerFaceDown.Height), 2, 5, 3, 1, b1);
 
         }
 
@@ -282,11 +282,11 @@ namespace Glitch
                     switch (GameVariables.ENEMIES[i].Direction)
                     {
                         case 1: //right
-                            GameVariables.ENEMIES[i].Draw(enemy, spriteBatch);
+                            GameVariables.ENEMIES[i].Draw(enemyFaceLeft, spriteBatch);
                             GameVariables.ENEMIES[i].Move();
                             break;
                         case 3: //left
-                            GameVariables.ENEMIES[i].Draw(enemy, spriteBatch);
+                            GameVariables.ENEMIES[i].Draw(enemyFaceLeft, spriteBatch);
                             GameVariables.ENEMIES[i].Move();
                             break;
                     }
