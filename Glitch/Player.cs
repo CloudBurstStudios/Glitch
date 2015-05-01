@@ -18,10 +18,6 @@ namespace Glitch
         private int laserCharge;
         protected bool hasKey;
         private Bullet playerBullet;
-        private Texture2D playerFaceUp;
-        private Texture2D playerFaceDown;
-        private Texture2D playerFaceRight;
-        private Texture2D playerFaceLeft;
         private Rectangle rect;
 
 

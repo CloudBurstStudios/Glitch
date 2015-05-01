@@ -29,6 +29,9 @@ namespace Glitch
         Texture2D playerBullet;
         Texture2D enemyBullet;
         Texture2D enemyFaceLeft;
+        Texture2D enemyFaceRight;
+        Texture2D enemyFaceUp;
+        Texture2D enemyFaceDown;
         Texture2D gameWall;
         Texture2D trap;
         Texture2D line;
@@ -75,7 +78,6 @@ namespace Glitch
             GameVariables.ENEMIES = new List<Enemy>();
             GameVariables.TRAPS = new List<Trap>();
             GameVariables.ENEMYPOS = new List<Vector2>();
-
             worldGen = new WorldGeneration(e1, t);
 
         }
@@ -123,6 +125,9 @@ namespace Glitch
             menuFont = this.Content.Load<SpriteFont>("mainFont");
             enemyBullet = this.Content.Load<Texture2D>("playerbullet");
             enemyFaceLeft = this.Content.Load<Texture2D>("enemyFaceLeft");
+            enemyFaceRight = this.Content.Load<Texture2D>("enemyFaceRight");
+            enemyFaceUp = this.Content.Load<Texture2D>("enemyFaceUp");
+            enemyFaceDown = this.Content.Load<Texture2D>("enemyFaceDown");
             playerBullet = this.Content.Load<Texture2D>("playerbullet");
             playerFaceDown = this.Content.Load<Texture2D>("player_down");
             playerFaceUp = this.Content.Load<Texture2D>("player_up");
@@ -279,7 +284,7 @@ namespace Glitch
                 }
                 for (int i = 0; i < GameVariables.CURRENT_ROOM.NumEnemies; i++)
                 {
-                            e1.Draw(enemyFaceLeft, spriteBatch);
+                            e1.Draw(enemyFaceRight, spriteBatch);
                             e1.Move();
                 }
 

@@ -47,12 +47,12 @@ namespace Glitch
 
         public override void Move()
         {
-            if (position.X <= 0)
+            if (position.X <= 75)
             {
                 direction = 1;
                 position.X++;
             }
-            if (position.X >= GameVariables.WINDOW_WIDTH)
+            if (position.X >= 920)
             {
                 direction = 3;
                 position.X--;
@@ -62,11 +62,11 @@ namespace Glitch
             {
                 case 1: //right
                     position.X += 5;
-                    spriteEffects = SpriteEffects.FlipHorizontally;
+                    spriteEffects = SpriteEffects.None;
                     break;
                 case 3: //left
                     position.X -= 5;
-                    spriteEffects = SpriteEffects.None;
+                    spriteEffects = SpriteEffects.FlipHorizontally;
                     break;
             }
         }
@@ -86,7 +86,7 @@ namespace Glitch
                 sb.Begin();
                 for (int i = 0; i < GameVariables.CURRENT_ROOM.NumEnemies; i++)
                 {
-                    sb.Draw(sprite, GameVariables.ENEMYPOS[i], new Rectangle(0, 0, sprite.Width, sprite.Height), Color.White, 0, position, 0.15f, spriteEffects, 0);
+                    sb.Draw(sprite, GameVariables.ENEMYPOS[i], new Rectangle(0, 0, sprite.Width, sprite.Height), Color.White, 0, position, 0.1f, spriteEffects, 0);
                 }
                 sb.End();
         }
