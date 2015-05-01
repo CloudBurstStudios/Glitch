@@ -74,6 +74,7 @@ namespace Glitch
             rgen = new Random();
             GameVariables.ENEMIES = new List<Enemy>();
             GameVariables.TRAPS = new List<Trap>();
+            GameVariables.ENEMYPOS = new List<Vector2>();
 
             worldGen = new WorldGeneration(e1, t);
 
@@ -278,18 +279,8 @@ namespace Glitch
                 }
                 for (int i = 0; i < GameVariables.CURRENT_ROOM.NumEnemies; i++)
                 {
-                    //switch statement for enemy movement
-                    switch (GameVariables.ENEMIES[i].Direction)
-                    {
-                        case 1: //right
-                            GameVariables.ENEMIES[i].Draw(enemyFaceLeft, spriteBatch);
-                            GameVariables.ENEMIES[i].Move();
-                            break;
-                        case 3: //left
-                            GameVariables.ENEMIES[i].Draw(enemyFaceLeft, spriteBatch);
-                            GameVariables.ENEMIES[i].Move();
-                            break;
-                    }
+                            e1.Draw(enemyFaceLeft, spriteBatch);
+                            e1.Move();
                 }
 
                 //drawing the bullets

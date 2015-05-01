@@ -30,7 +30,6 @@ namespace Glitch
         {
             defaultEnemy = en;
             defaultTrap = tr;
-            enemiesLeftToAdd = GameVariables.NUMBER_OF_ENEMIES;
         }
 
         //method that is called by the program to generate the world
@@ -38,6 +37,7 @@ namespace Glitch
         {
             currentRoom = root;
             Room newRoom;
+            enemiesLeftToAdd = GameVariables.NUMBER_OF_ENEMIES;
 
             //deciding the upper and lower bounds of enemies allowed per room
             enemiesLower = GameVariables.NUMBER_OF_ENEMIES / GameVariables.NUMBER_OF_ROOMS;
@@ -63,6 +63,12 @@ namespace Glitch
             //saving the completed room layout to the GameVariables class
             GameVariables.ROOT_ROOM = root;
             GameVariables.CURRENT_ROOM = GameVariables.ROOT_ROOM;
+
+            //adding enemy positions to the room
+            for (int i = 0; i < GameVariables.NUMBER_OF_ENEMIES; i++)
+            {
+                GameVariables.ENEMYPOS.Add(new Vector2(rgen.Next(75, 921), rgen.Next(20, 476)));
+            }
 
         }
 

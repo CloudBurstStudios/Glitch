@@ -43,11 +43,6 @@ namespace Glitch
         {
             enemyBullet = b;
             isAlive = true;
-
-            for (int i = 0; i < GameVariables.NUMBER_OF_ENEMIES; i++)
-            {
-                enemyPositions.Add(new Vector2(rgen.Next(75,921),rgen.Next(20,476)));
-            }
         }
 
         public override void Move()
@@ -91,7 +86,7 @@ namespace Glitch
                 sb.Begin();
                 for (int i = 0; i < GameVariables.CURRENT_ROOM.NumEnemies; i++)
                 {
-                    sb.Draw(sprite, enemyPositions[i], new Rectangle(0, 0, sprite.Width, sprite.Height), Color.White, 0, position, 0.15f, spriteEffects, 0);
+                    sb.Draw(sprite, GameVariables.ENEMYPOS[i], new Rectangle(0, 0, sprite.Width, sprite.Height), Color.White, 0, position, 0.15f, spriteEffects, 0);
                 }
                 sb.End();
         }
