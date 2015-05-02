@@ -38,11 +38,9 @@ namespace Glitch
         }
 
         //constructor
-        public Entity(Vector2 pos, Rectangle cd, int dir, int hth, int lvs, int dam)
+        public Entity(Vector2 pos, Rectangle cd, int dir)
             : base(pos, cd, dir)
         {
-            health = hth;
-            lives = lvs;
         }
 
         public abstract override void Move();

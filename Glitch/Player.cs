@@ -40,8 +40,8 @@ namespace Glitch
             set { playerBullet = value; }
         }
         //constructor
-        public Player(Vector2 pos, Rectangle cd, int dir, int hth, int lvs, int dam, Bullet b)
-            : base(pos, cd, dir, hth, lvs, dam)
+        public Player(Vector2 pos, Rectangle cd, int dir, int hth, Bullet b)
+            : base(pos, cd, dir)
         {
             laserCharge = 100;
             playerBullet = b;

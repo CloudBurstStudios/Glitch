@@ -17,6 +17,7 @@ namespace Glitch
         private Bullet enemyBullet;
         private SpriteEffects spriteEffects;
         private List<Vector2> enemyPositions = new List<Vector2>();
+        private Tuple<int, int> roomNo;
         private Random rgen = new Random();
 
         private bool isAlive;
@@ -26,6 +27,11 @@ namespace Glitch
         {
             get { return isAlive; }
             set { isAlive = value; }
+        }
+
+        public Tuple<int, int> RoomNo
+        {
+            get { return roomNo; }
         }
 
 
@@ -38,9 +44,10 @@ namespace Glitch
         }
 
         //constructor
-        public Enemy(Vector2 pos, Rectangle cd, int dir, int hth, int lvs, int dam, Bullet b)
-            : base(pos, cd, dir, hth, lvs, dam)
+        public Enemy(Vector2 pos, Rectangle cd, int dir, Bullet b, Tuple<int,int> room)
+            : base(pos, cd, dir)
         {
+            roomNo = room;
             enemyBullet = b;
             isAlive = true;
         }
@@ -84,10 +91,7 @@ namespace Glitch
         public override void Draw(Texture2D sprite, SpriteBatch sb)
         {
                 sb.Begin();
-                for (int i = 0; i < GameVariables.CURRENT_ROOM.NumEnemies; i++)
-                {
-                    sb.Draw(sprite, GameVariables.ENEMYPOS[i], new Rectangle(0, 0, sprite.Width, sprite.Height), Color.White, 0, position, 0.1f, spriteEffects, 0);
-                }
+                    sb.Draw(sprite, position, new Rectangle(0, 0, sprite.Width, sprite.Height), Color.White, 0, position, 0.1f, spriteEffects, 0);
                 sb.End();
         }
     }

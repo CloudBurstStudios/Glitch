@@ -22,14 +22,15 @@ namespace Glitch
         private int enemiesPerRoom;
         private Enemy defaultEnemy;
         private Trap defaultTrap;
+        private Bullet defaultBullet;
         private int enemiesUpper;
         private int enemiesLower;
 
         //constructor
-        public WorldGeneration(Enemy en, Trap tr)
+        public WorldGeneration(Trap tr, Bullet bl)
         {
-            defaultEnemy = en;
             defaultTrap = tr;
+            defaultBullet = bl;
         }
 
         //method that is called by the program to generate the world
@@ -177,7 +178,12 @@ namespace Glitch
             {
                 if (enemiesLeftToAdd > 0)
                 {
-                    currentRoom.NumEnemies++;
+                    GameVariables.ENEMIES.Add(
+                        new Enemy(
+                            new Vector2(rgen.Next(75, 921), rgen.Next(20, 476)),
+                                new Rectangle(),
+                                0, defaultBullet,
+                                new Tuple<int,int>(currentRoom.PosX, currentRoom.PosY)));
                     enemiesLeftToAdd--;
                 }
             }

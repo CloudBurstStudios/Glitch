@@ -29,11 +29,10 @@ namespace Glitch
         }
 
         //constructor
-        public Bullet(Vector2 pos, Rectangle cd, int dir, bool ipb)
+        public Bullet(Vector2 pos, Rectangle cd, int dir)
             : base(pos, cd, dir)
         {
             isActive = false;
-            isPlayerBullet = ipb;
         }
 
         public override void Move()

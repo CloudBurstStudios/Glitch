@@ -78,7 +78,11 @@ namespace Glitch
             GameVariables.ENEMIES = new List<Enemy>();
             GameVariables.TRAPS = new List<Trap>();
             GameVariables.ENEMYPOS = new List<Vector2>();
-            worldGen = new WorldGeneration(e1, t);
+            t = new Trap(new Vector2(0, 0), new Rectangle());
+            b1 = new Bullet(new Vector2(20, 20), new Rectangle(), 0);
+            b2 = new Bullet(new Vector2(20, 20), new Rectangle(), 0);
+            p1 = new Player(new Vector2(500, 175), new Rectangle(), 0, 5, b1);
+            worldGen = new WorldGeneration(t, b1);
 
         }
 
@@ -135,12 +139,6 @@ namespace Glitch
             playerFaceLeft = this.Content.Load<Texture2D>("player_left");
             trap = this.Content.Load<Texture2D>("trap");
             gameWall = this.Content.Load<Texture2D>("Labratory");
-
-            t = new Trap(new Vector2(0, 0), new Rectangle(1, 1, trap.Width, trap.Height));
-            b1 = new Bullet(new Vector2(20, 20), new Rectangle(20, 20, playerBullet.Width, playerBullet.Height), 0, true);
-            b2 = new Bullet(new Vector2(20, 20), new Rectangle(20, 20, enemyBullet.Width, enemyBullet.Height), 0, false);
-            e1 = new Enemy(new Vector2(rgen.Next(75,920), rgen.Next(20,475)), new Rectangle(0, 250, enemyFaceLeft.Width, enemyFaceLeft.Height), 3, 1, 1, 1, b2);
-            p1 = new Player(new Vector2(500, 175), new Rectangle(250, 250, playerFaceDown.Width, playerFaceDown.Height), 2, 5, 3, 1, b1);
 
         }
 
@@ -282,21 +280,19 @@ namespace Glitch
                         p1.Draw(playerFaceLeft, spriteBatch);
                         break;
                 }
-                for (int i = 0; i < GameVariables.CURRENT_ROOM.NumEnemies; i++)
+                foreach (Enemy e in GameVariables.ENEMIES)
                 {
-                            e1.Draw(enemyFaceRight, spriteBatch);
-                            e1.Move();
+                    if (GameVariables.CURRENT_ROOM.PosX == e.RoomNo.Item1 && GameVariables.CURRENT_ROOM.PosY == e.RoomNo.Item2)
+                    {
+                            e.Draw(enemyFaceRight, spriteBatch);
+                            
+                    }
+                    e.Move();
                 }
 
                 //drawing the bullets
                 b1.Draw(playerBullet, spriteBatch);
                 b2.Draw(enemyBullet, spriteBatch);
-
-                //drawing the walls
-                /*foreach (Wall wall in walls)
-                {
-                    wall.Draw(gameWall, spriteBatch);
-                }*/
             }
 
             if (kState.IsKeyDown(Keys.P) == true && sMenu.StartGame() == true)
