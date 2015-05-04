@@ -180,6 +180,15 @@ namespace Glitch
                 b1.Move();
                 b2.Move();
 
+                foreach (Enemy e in GameVariables.ENEMIES)
+                {
+                    if (e.IsActive)
+                    {
+                        e.Move();
+                        Console.WriteLine(e.Position.X + " " + e.Position.Y);
+                    }
+                }
+
                 /*if (e1.Position.X == 765)
                 {
                     e1.Fire();
@@ -213,7 +222,7 @@ namespace Glitch
                 {
                     p1.Health--;
 
-                    e.IsAlive = false;
+                    e.IsActive = false;
                 }
                 if (p1.CheckCollision(e.EnemyBullet))
                 {
@@ -222,7 +231,7 @@ namespace Glitch
 
                 if (e.CheckCollision(p1.Bullet))
                 {
-                    e.IsAlive = false;
+                    e.IsActive = false;
                     gMenu.Score++;
                 }
             }
@@ -285,9 +294,12 @@ namespace Glitch
                     if (GameVariables.CURRENT_ROOM.PosX == e.RoomNo.Item1 && GameVariables.CURRENT_ROOM.PosY == e.RoomNo.Item2)
                     {
                             e.Draw(enemyFaceRight, spriteBatch);
-                            
+                            e.IsActive = true;
                     }
-                    e.Move();
+                    else
+                    {
+                        e.IsActive = false;
+                    }
                 }
 
                 //drawing the bullets

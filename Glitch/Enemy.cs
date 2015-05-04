@@ -20,13 +20,13 @@ namespace Glitch
         private Tuple<int, int> roomNo;
         private Random rgen = new Random();
 
-        private bool isAlive;
+        private bool isActive;
 
         //properties
-        public bool IsAlive
+        public bool IsActive
         {
-            get { return isAlive; }
-            set { isAlive = value; }
+            get { return isActive; }
+            set { isActive = value; }
         }
 
         public Tuple<int, int> RoomNo
@@ -49,7 +49,7 @@ namespace Glitch
         {
             roomNo = room;
             enemyBullet = b;
-            isAlive = true;
+            isActive = true;
         }
 
         public override void Move()

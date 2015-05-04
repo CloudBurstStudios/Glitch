@@ -54,8 +54,8 @@ namespace Glitch
         {
             if (!playerBullet.IsActive)
             {
-                playerBullet.Direction = this.Direction;
-                playerBullet.Position = this.Position;
+                playerBullet.Direction = direction;
+                playerBullet.Position = position;
                 playerBullet.IsActive = true;
             }
         }
@@ -66,13 +66,13 @@ namespace Glitch
             switch (direction)
             {
                 case 0: //up
-                    position.Y -= 5; break;
+                    position.Y -= 5f; break;
                 case 1: //right
-                    position.X += 5; break;
+                    position.X += 5f; break;
                 case 2: //down
-                    position.Y += 5; break;
+                    position.Y += 5f; break;
                 case 3: //left
-                    position.X -= 5; break;
+                    position.X -= 5f; break;
             }
             // Check the edges
             if (position.X < 75)
@@ -132,7 +132,9 @@ namespace Glitch
         public override void Draw(Texture2D sprite, SpriteBatch sb)
         {
             sb.Begin();
-                    sb.Draw(sprite, position, null, Color.White, 0, position, 0.25f, SpriteEffects.None, 0);
+                    //sb.Draw(sprite, position, null, Color.White, 0, position, 0.01f, SpriteEffects.None, 0);
+            sb.Draw(sprite, new Rectangle((int)position.X, (int)position.Y, (int)(sprite.Width * 0.25), (int)(sprite.Height * 0.25)), Color.White);
+                    Console.WriteLine("P: " + position.X + " " + position.Y);
             sb.End();
         }
     }
