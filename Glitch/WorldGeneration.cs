@@ -19,8 +19,6 @@ namespace Glitch
         private Room root = new Room(0, 0);
         private Room currentRoom = null;
         private int enemiesLeftToAdd;
-        private int enemiesPerRoom;
-        private Enemy defaultEnemy;
         private Trap defaultTrap;
         private Bullet defaultBullet;
         private int enemiesUpper;
@@ -183,7 +181,8 @@ namespace Glitch
                             new Vector2(rgen.Next(65, 681), rgen.Next(20, 346)),
                                 new Rectangle(),
                                 1, defaultBullet,
-                                new Tuple<int,int>(currentRoom.PosX, currentRoom.PosY)));
+                                new Tuple<int,int>(currentRoom.PosX, currentRoom.PosY),
+                                rgen.Next(3,9)));
                     enemiesLeftToAdd--;
                 }
             }

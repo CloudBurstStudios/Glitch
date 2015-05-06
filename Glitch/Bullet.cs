@@ -15,17 +15,11 @@ namespace Glitch
     {
         //attribute and property for if the bullet is active
         protected bool isActive;
-        protected bool isPlayerBullet;
 
         public bool IsActive
         {
             get { return isActive; }
             set { isActive = value; }
-        }
-
-        public bool IsPlayerBullet
-        {
-            get { return isPlayerBullet; }
         }
 
         //constructor

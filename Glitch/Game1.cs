@@ -1,5 +1,6 @@
 ﻿#region Using Statements
 using System;
+using System.Diagnostics;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
@@ -43,7 +44,6 @@ namespace Glitch
         Player p1;
         // player rectangleft
         Rectangle p1Rect;
-        Enemy e1;
         // enemy rectangle
         Rectangle e1Rect;
         Bullet b1;
@@ -52,10 +52,6 @@ namespace Glitch
         // bullet rectangles
         Rectangle b1Rect;
         Rectangle b2Rect;
-        //List<Wall> walls;
-        //List<Enemy> enemyList;
-        //List<Trap> trapList;
-        //List<Wall> walls;
 
         StartMenu sMenu;
         PauseMenu pMenu;
@@ -189,10 +185,18 @@ namespace Glitch
                     }
                 }
 
-                /*if (e1.Position.X == 765)
+                Stopwatch watch = new Stopwatch();
+                Random rgen = new Random();
+                int randTime = rgen.Next(0, 26);
+                int randDirection = rgen.Next(0, 4);
+
+                watch.Start();
+
+                if (watch.ElapsedMilliseconds == randTime)
                 {
-                    e1.Fire();
-                }*/
+                    GameVariables.ENEMIES[rgen.Next(0,GameVariables.ENEMIES.Count)].Direction = randDirection;
+                    watch.Reset();
+                }
 
 
             }
@@ -293,8 +297,23 @@ namespace Glitch
                 {
                     if (GameVariables.CURRENT_ROOM.PosX == e.RoomNo.Item1 && GameVariables.CURRENT_ROOM.PosY == e.RoomNo.Item2)
                     {
-                            e.Draw(enemyFaceRight, spriteBatch);
-                            e.IsActive = true;
+                        switch (e.Direction)
+                        {
+                            case 0: //up
+                                e.Draw(enemyFaceUp, spriteBatch);
+                                break;
+                            case 1: //right
+                                e.Draw(enemyFaceRight, spriteBatch);
+                                break;
+                            case 2: //down
+                                e.Draw(enemyFaceDown, spriteBatch);
+                                break;
+                            case 3: //left
+                                e.Draw(enemyFaceLeft, spriteBatch);
+                                break;
+
+                        }
+                        e.IsActive = true;
                     }
                     else
                     {

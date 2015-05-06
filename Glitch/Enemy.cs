@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Storage;
 using Microsoft.Xna.Framework.GamerServices;
+using System.Diagnostics;
 
 namespace Glitch
 {
@@ -15,10 +16,10 @@ namespace Glitch
     {
         //attributes
         private Bullet enemyBullet;
-        private SpriteEffects spriteEffects;
         private List<Vector2> enemyPositions = new List<Vector2>();
         private Tuple<int, int> roomNo;
         private Random rgen = new Random();
+        private int speed;
 
         private bool isActive;
 
@@ -44,39 +45,54 @@ namespace Glitch
         }
 
         //constructor
-        public Enemy(Vector2 pos, Rectangle cd, int dir, Bullet b, Tuple<int,int> room)
+        public Enemy(Vector2 pos, Rectangle cd, int dir, Bullet b, Tuple<int,int> room, int spd)
             : base(pos, cd, dir)
         {
             roomNo = room;
             enemyBullet = b;
             isActive = true;
             direction = dir;
+            speed = spd;
         }
 
         public override void Move()
         {
-            if (position.X <= 65)
-            {
-                direction = 1;
-                position.X++;
-            }
-            if (position.X >= 680)
-            {
-                direction = 3;
-                position.X--;
-            }
-
             switch (direction)
             {
+                case 0: //up
+                    position.Y -= speed;
+                    break;
                 case 1: //right
-                    position.X += 5;
-                    spriteEffects = SpriteEffects.None;
+                    position.X += speed;
+                    break;
+                case 2: //down
+                    position.Y += speed;
                     break;
                 case 3: //left
-                    position.X -= 5;
-                    spriteEffects = SpriteEffects.FlipHorizontally;
+                    position.X -= speed;
                     break;
             }
+
+            if (position.Y < 20)
+            {
+                direction = 2;
+            }
+
+            if (position.X > 680)
+            {
+                direction = 3;
+            }
+
+            if (position.Y > 345)
+            {
+                direction = 0;
+            }
+
+            if (position.X < 65)
+            {
+                direction = 1;
+            }
+
         }
 
         public void Fire()

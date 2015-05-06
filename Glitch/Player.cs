@@ -15,18 +15,12 @@ namespace Glitch
     class Player : Entity
     {
         //attributes
-        private int laserCharge;
         protected bool hasKey;
         private Bullet playerBullet;
         private Rectangle rect;
 
 
         //properties
-        public int LaserCharge
-        {
-            get { return laserCharge; }
-            private set { laserCharge = value < 0 ? 0 : value; }
-        }
 
         public bool HasKey
         {
@@ -43,10 +37,10 @@ namespace Glitch
         public Player(Vector2 pos, Rectangle cd, int dir, int hth, Bullet b)
             : base(pos, cd, dir)
         {
-            laserCharge = 100;
             playerBullet = b;
             hasKey = false;
             rect = cd;
+            health = hth;
         }
 
         //player fires the laser
