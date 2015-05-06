@@ -75,37 +75,37 @@ namespace Glitch
                     position.X -= 5f; break;
             }
             // Check the edges
-            if (position.X < 75)
+            if (position.X < 65)
             {
-                if (position.Y >= 215 && position.Y <= 270 && GameVariables.CURRENT_ROOM.Left != null)
+                if (position.Y >= 195 && position.Y <= 220 && GameVariables.CURRENT_ROOM.Left != null)
                 {
-                    position.X = 920;
+                    position.X = 680;
                     GameVariables.CURRENT_ROOM = GameVariables.CURRENT_ROOM.Left;
                 }
                 else
                 {
-                    position.X = 75;
+                    position.X = 65;
                 }
             }
 
-            if (position.X > 920)
+            if (position.X > 680)
             {
-                if (position.Y >= 215 && position.Y <= 270 && GameVariables.CURRENT_ROOM.Right != null)
+                if (position.Y >= 195 && position.Y <= 220 && GameVariables.CURRENT_ROOM.Right != null)
                 {
-                    position.X = 75;
+                    position.X = 65;
                     GameVariables.CURRENT_ROOM = GameVariables.CURRENT_ROOM.Right;
                 }
                 else
                 {
-                    position.X = 920;
+                    position.X = 680;
                 }
             }
 
             if (position.Y < 20)
             {
-                if (position.X >= 465 && position.X <= 535 && GameVariables.CURRENT_ROOM.Up != null)
+                if (position.X >= 350 && position.X <= 400 && GameVariables.CURRENT_ROOM.Up != null)
                 {
-                    position.Y = 475;
+                    position.Y = 345;
                     GameVariables.CURRENT_ROOM = GameVariables.CURRENT_ROOM.Up;
                 }
                 else
@@ -114,16 +114,16 @@ namespace Glitch
                 }
             }
 
-            if (position.Y > 475)
+            if (position.Y > 345)
             {
-                if (position.X >= 465 && position.X <= 535 && GameVariables.CURRENT_ROOM.Down != null)
+                if (position.X >= 350 && position.X <= 400 && GameVariables.CURRENT_ROOM.Down != null)
                 {
                     position.Y = 20;
                     GameVariables.CURRENT_ROOM = GameVariables.CURRENT_ROOM.Down;
                 }
                 else
                 {
-                    position.Y = 475;
+                    position.Y = 345;
                 }
             }
         }

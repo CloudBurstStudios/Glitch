@@ -50,16 +50,17 @@ namespace Glitch
             roomNo = room;
             enemyBullet = b;
             isActive = true;
+            direction = dir;
         }
 
         public override void Move()
         {
-            if (position.X <= 75)
+            if (position.X <= 65)
             {
                 direction = 1;
                 position.X++;
             }
-            if (position.X >= 920)
+            if (position.X >= 680)
             {
                 direction = 3;
                 position.X--;
@@ -91,7 +92,8 @@ namespace Glitch
         public override void Draw(Texture2D sprite, SpriteBatch sb)
         {
                 sb.Begin();
-                    sb.Draw(sprite, position, new Rectangle(0, 0, sprite.Width, sprite.Height), Color.White, 0, position, 0.1f, spriteEffects, 0);
+                    //sb.Draw(sprite, position, new Rectangle(0, 0, sprite.Width, sprite.Height), Color.White, 0, position, 0.1f, spriteEffects, 0);
+                sb.Draw(sprite, new Rectangle((int)position.X, (int)position.Y, (int)(sprite.Width * 0.1), (int)(sprite.Height * 0.1)), Color.White);
                 sb.End();
         }
     }

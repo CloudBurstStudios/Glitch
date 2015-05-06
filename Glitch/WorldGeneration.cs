@@ -180,9 +180,9 @@ namespace Glitch
                 {
                     GameVariables.ENEMIES.Add(
                         new Enemy(
-                            new Vector2(rgen.Next(75, 921), rgen.Next(20, 476)),
+                            new Vector2(rgen.Next(65, 681), rgen.Next(20, 346)),
                                 new Rectangle(),
-                                0, defaultBullet,
+                                1, defaultBullet,
                                 new Tuple<int,int>(currentRoom.PosX, currentRoom.PosY)));
                     enemiesLeftToAdd--;
                 }
