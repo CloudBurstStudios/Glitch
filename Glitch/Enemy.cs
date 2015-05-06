@@ -78,11 +78,6 @@ namespace Glitch
                 direction = 2;
             }
 
-            if (position.X > 680)
-            {
-                direction = 3;
-            }
-
             if (position.Y > 345)
             {
                 direction = 0;
@@ -92,6 +87,14 @@ namespace Glitch
             {
                 direction = 1;
             }
+
+            if (position.X > 680)
+            {
+                direction = 3;
+            }
+
+
+            
 
         }
 

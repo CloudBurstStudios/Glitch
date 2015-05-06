@@ -12,7 +12,7 @@ using System.Threading;
 
 namespace Glitch
 {
-    class StartMenu
+    class WinMenu
     {
         KeyboardState kState;
         Color color1 = Color.White;
@@ -88,7 +88,7 @@ namespace Glitch
             spriteBatch.Begin();
 
             spriteBatch.DrawString(font,
-                "gLiTcH",
+                "You Won!",
                 new Vector2(325, 50),
                 Color.Black,
                 0f,
@@ -108,8 +108,8 @@ namespace Glitch
                 0);
 
             spriteBatch.DrawString(font,
-                "Directions",
-                new Vector2(305, 275),
+                "Difficulty",
+                new Vector2(310, 275),
                 color2,
                 0f,
                 new Vector2(0, 0),
@@ -143,7 +143,7 @@ namespace Glitch
             Line(spriteBatch, //draw line
            new Vector2(x2, y1), //start of line
            new Vector2(x2, y2), //end of line
-           texture 
+           texture
            );
 
             Line(spriteBatch, //draw line
@@ -185,7 +185,7 @@ namespace Glitch
 
         public void DrawMenu(SpriteBatch spriteBatch, SpriteFont spriteFont, Texture2D texture)
         {
-            DrawText(spriteBatch,spriteFont);
+            DrawText(spriteBatch, spriteFont);
             DrawLine(spriteBatch, texture);
         }
 

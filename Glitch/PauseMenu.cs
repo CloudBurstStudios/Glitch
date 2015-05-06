@@ -27,8 +27,8 @@ namespace Glitch
         public void UpdateMenu()
         {
             kState = Keyboard.GetState();
-            dir[0] = kState.IsKeyDown(Keys.Up);
-            dir[1] = kState.IsKeyDown(Keys.Down);
+            dir[0] = kState.IsKeyDown(Keys.W);
+            dir[1] = kState.IsKeyDown(Keys.S);
             if (y1 == 250)
             {
                 if (dir[1])
@@ -157,7 +157,7 @@ namespace Glitch
 
         public bool ContinueGame()
         {
-            if (kState.IsKeyDown(Keys.Enter) == true && y1 == 250)
+            if (kState.IsKeyDown(Keys.Space) == true && y1 == 250)
             {
                 return true;
             }
@@ -169,7 +169,7 @@ namespace Glitch
 
         public bool QuitGame()
         {
-            if (kState.IsKeyDown(Keys.Enter) == true && y1 == 350)
+            if (kState.IsKeyDown(Keys.Space) == true && y1 == 350)
             {
                 return true;
             }

@@ -56,6 +56,7 @@ namespace Glitch
         StartMenu sMenu;
         PauseMenu pMenu;
         GameMenu gMenu;
+        WinMenu wMenu;
         WorldGeneration worldGen;
         ToolLoader tLoader;
 
@@ -69,6 +70,7 @@ namespace Glitch
             sMenu = new StartMenu();
             pMenu = new PauseMenu();
             gMenu = new GameMenu();
+            wMenu = new WinMenu();
             tLoader = new ToolLoader();
             rgen = new Random();
             GameVariables.ENEMIES = new List<Enemy>();
@@ -164,7 +166,7 @@ namespace Glitch
             if (sMenu.StartGame() == false)
             {
                 kState = Keyboard.GetState();
-                sMenu.UpdateMenu();
+                wMenu.UpdateMenu();
             }
 
             //if start game is selected, run the game logic
