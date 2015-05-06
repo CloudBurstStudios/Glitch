@@ -19,17 +19,17 @@ namespace Glitch
         private Room root = new Room(0, 0);
         private Room currentRoom = null;
         private int enemiesLeftToAdd;
-        private int enemiesPerRoom;
-        private Enemy defaultEnemy;
+        private int trapsLeftToAdd;
         private Trap defaultTrap;
         private Bullet defaultBullet;
         private int enemiesUpper;
         private int enemiesLower;
+        private int trapsUpper;
+        private int trapsLower;
 
         //constructor
-        public WorldGeneration(Trap tr, Bullet bl)
+        public WorldGeneration(Bullet bl)
         {
-            defaultTrap = tr;
             defaultBullet = bl;
         }
 
@@ -39,11 +39,13 @@ namespace Glitch
             currentRoom = root;
             Room newRoom;
             enemiesLeftToAdd = GameVariables.NUMBER_OF_ENEMIES;
+            trapsLeftToAdd = GameVariables.DENSITY_OF_TRAPS;
 
-            //deciding the upper and lower bounds of enemies allowed per room
+            //deciding the upper and lower bounds of enemies/traps allowed per room
             enemiesLower = GameVariables.NUMBER_OF_ENEMIES / GameVariables.NUMBER_OF_ROOMS;
+            trapsLower = GameVariables.DENSITY_OF_TRAPS / GameVariables.NUMBER_OF_ROOMS;
 
-            //if the enemies do not divide evenly into the rooms
+            //if the enemies/traps do not divide evenly into the rooms
             if (GameVariables.NUMBER_OF_ENEMIES % GameVariables.NUMBER_OF_ROOMS != 0)
             {
                 enemiesUpper = enemiesLower + 1;
@@ -51,6 +53,15 @@ namespace Glitch
             else
             {
                 enemiesUpper = enemiesLower;
+            }
+
+            if (GameVariables.DENSITY_OF_TRAPS % GameVariables.NUMBER_OF_ROOMS != 0)
+            {
+                trapsUpper = trapsLower + 1;
+            }
+            else
+            {
+                trapsUpper = trapsLower;
             }
 
             //Adding rooms to the level
@@ -64,12 +75,6 @@ namespace Glitch
             //saving the completed room layout to the GameVariables class
             GameVariables.ROOT_ROOM = root;
             GameVariables.CURRENT_ROOM = GameVariables.ROOT_ROOM;
-
-            //adding enemy positions to the room
-            for (int i = 0; i < GameVariables.NUMBER_OF_ENEMIES; i++)
-            {
-                GameVariables.ENEMYPOS.Add(new Vector2(rgen.Next(75, 921), rgen.Next(20, 476)));
-            }
 
         }
 
@@ -192,7 +197,16 @@ namespace Glitch
         //adds traps to the world
         public void AddTraps()
         {
+            Vector2 sizeOfRoom = new Vector2(680 - 65, 345 - 20);
 
+            for (int i = 0; i < rgen.Next(trapsLower, trapsUpper + 1); i++)
+            {
+                if (trapsLeftToAdd > 0)
+                {
+
+                    trapsLeftToAdd--;
+                }
+            }
         }
     }
 }

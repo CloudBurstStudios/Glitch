@@ -25,5 +25,8 @@ namespace Glitch
         public static List<Enemy> ENEMIES;
         public static List<Trap> TRAPS;
         public static List<Vector2> ENEMYPOS;
+        public static Vector2 ENEMY_DIMENSIONS;
+        public static Vector2 PLAYER_DIMENSIONS;
+        public static Vector2 TRAP_DIMENSIONS;
     }
 }

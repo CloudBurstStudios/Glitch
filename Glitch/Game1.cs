@@ -37,7 +37,6 @@ namespace Glitch
         Texture2D line;
         Random rgen;
         SpriteFont menuFont;
-        Trap t;
         // trap rectangle
         Rectangle tRect;
         Player p1;
@@ -78,11 +77,10 @@ namespace Glitch
             GameVariables.ENEMIES = new List<Enemy>();
             GameVariables.TRAPS = new List<Trap>();
             GameVariables.ENEMYPOS = new List<Vector2>();
-            t = new Trap(new Vector2(0, 0), new Rectangle());
             b1 = new Bullet(new Vector2(20, 20), new Rectangle(), 0);
             b2 = new Bullet(new Vector2(20, 20), new Rectangle(), 0);
             p1 = new Player(new Vector2(500, 175), new Rectangle(), 0, 5, b1);
-            worldGen = new WorldGeneration(t, b1);
+            worldGen = new WorldGeneration(b1);
 
         }
 
@@ -139,6 +137,11 @@ namespace Glitch
             playerFaceLeft = this.Content.Load<Texture2D>("player_left");
             trap = this.Content.Load<Texture2D>("trap");
             gameWall = this.Content.Load<Texture2D>("Labratory");
+
+            //Setting up dimensions in GameVariables
+            GameVariables.PLAYER_DIMENSIONS = new Vector2(playerFaceUp.Width, playerFaceUp.Height);
+            GameVariables.ENEMY_DIMENSIONS = new Vector2(enemyFaceUp.Width, enemyFaceUp.Height);
+            GameVariables.TRAP_DIMENSIONS = new Vector2(trap.Width, trap.Height);
 
         }
 
@@ -268,8 +271,6 @@ namespace Glitch
                 spriteBatch.Draw(gameWall, new Rectangle(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), Color.Silver);
                 spriteBatch.DrawString(menuFont, "" + p1.Health, new Vector2(120, 25), Color.Black);
                 spriteBatch.End();
-                //draw the traps
-                t.Draw(trap, spriteBatch);
 
                 gMenu.DrawText(spriteBatch, menuFont);
 
@@ -289,6 +290,7 @@ namespace Glitch
                         p1.Draw(playerFaceLeft, spriteBatch);
                         break;
                 }
+
                 foreach (Enemy e in GameVariables.ENEMIES)
                 {
                     if (GameVariables.CURRENT_ROOM.PosX == e.RoomNo.Item1 && GameVariables.CURRENT_ROOM.PosY == e.RoomNo.Item2)
@@ -299,6 +301,14 @@ namespace Glitch
                     else
                     {
                         e.IsActive = false;
+                    }
+                }
+
+                foreach (Trap t in GameVariables.TRAPS)
+                {
+                    if (GameVariables.CURRENT_ROOM.PosX == t.Room.Item1 && GameVariables.CURRENT_ROOM.PosY == t.Room.Item2)
+                    {
+                        t.Draw(trap, spriteBatch);
                     }
                 }
 
