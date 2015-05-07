@@ -17,11 +17,9 @@ namespace Glitch
     /// </summary>
     public class Game1 : Game
     {
+        //attributes
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        
-
-        //Attributes
         KeyboardState kState;
         Texture2D playerFaceUp;
         Texture2D playerFaceRight;
@@ -38,20 +36,8 @@ namespace Glitch
         Texture2D line;
         Random rgen;
         SpriteFont menuFont;
-        // trap rectangle
-        Rectangle tRect;
         Player p1;
-        // player rectangleft
-        Rectangle p1Rect;
-        // enemy rectangle
-        Rectangle e1Rect;
         Bullet b1;
-        Bullet b2;
-
-        // bullet rectangles
-        Rectangle b1Rect;
-        Rectangle b2Rect;
-
         StartMenu sMenu;
         PauseMenu pMenu;
         GameMenu gMenu;
@@ -60,6 +46,7 @@ namespace Glitch
         WorldGeneration worldGen;
         ToolLoader tLoader;
 
+        //constructor
         public Game1()
             : base()
         {
@@ -78,10 +65,9 @@ namespace Glitch
             GameVariables.TRAPS = new List<Trap>();
             GameVariables.ENEMYPOS = new List<Vector2>();
             b1 = new Bullet(new Vector2(20, 20), new Rectangle(), 0);
-            b2 = new Bullet(new Vector2(20, 20), new Rectangle(), 0);
             p1 = new Player(new Vector2(500, 175), new Rectangle(), 0, 5, b1);
             worldGen = new WorldGeneration(b1);
-
+            wMenu = new WinMenu();
         }
 
         /// <summary>
@@ -92,18 +78,19 @@ namespace Glitch
         /// </summary>
         protected override void Initialize()
         {
-            System.Diagnostics.Debug.WriteLine("Initialize");
-            // TODO: Add your initialization logic here
             base.Initialize();
+
+            //gets the initial state of the keyboard
             kState = Keyboard.GetState();
-            //to be able to use the window width and height in other classes
+
+            //sets the window width and height to be used in other classes
             GameVariables.WINDOW_HEIGHT = GraphicsDevice.Viewport.Height;
             GameVariables.WINDOW_WIDTH = GraphicsDevice.Viewport.Width;
 
-            //Reading the information from the external tool
+            //reads information from the external tool
             tLoader.ReadData();
 
-            //World generation call
+            //generates the world
             worldGen.GenerateWorld();
         }
 
@@ -116,12 +103,9 @@ namespace Glitch
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            // TODO: use this.Content to load your game content here
-
-            //Loads all texure and spritefonts here
             //texture to make lines around menu selection
             line = new Texture2D(GraphicsDevice, 1, 1);
-            line.SetData<Color>(new Color[] { Color.White });// fill the texture with white
+            line.SetData<Color>(new Color[] { Color.White });   // fill the texture with white
 
             //Loading textures to use in game
             menuFont = this.Content.Load<SpriteFont>("mainFont");
@@ -175,13 +159,12 @@ namespace Glitch
             }
 
             //if start game is selected, run the game logic
-            if (sMenu.StartGame() == true && kState.IsKeyDown(Keys.P) == false)
+            if (wMenu.StartGame() == true && kState.IsKeyDown(Keys.P) == false)
             {
                 kState = Keyboard.GetState();
                 this.ProcessInput(kState);
 
                 b1.Move();
-                b2.Move();
 
                 foreach (Enemy e in GameVariables.ENEMIES)
                 {
@@ -272,7 +255,7 @@ namespace Glitch
             sMenu.DrawMenu(spriteBatch, menuFont, line);
 
             //if the start game option is selected, run this code
-            if (sMenu.StartGame() == true)
+            if (wMenu.StartGame() == true)
             {
                 //draw the background
                 spriteBatch.Begin();
@@ -337,7 +320,6 @@ namespace Glitch
 
                 //drawing the bullets
                 b1.Draw(playerBullet, spriteBatch);
-                b2.Draw(enemyBullet, spriteBatch);
             }
 
             if (kState.IsKeyDown(Keys.P) == true && sMenu.StartGame() == true)
@@ -353,7 +335,7 @@ namespace Glitch
         public void ProcessInput(KeyboardState kstate)
         {
             //processes these keyboard inputs only during the game
-            if (sMenu.StartGame() == true)
+            if (wMenu.StartGame() == true)
             {
                 GraphicsDevice.Clear(Color.Black);
                 if (kstate.IsKeyDown(Keys.W))

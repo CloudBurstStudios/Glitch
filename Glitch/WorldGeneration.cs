@@ -70,6 +70,7 @@ namespace Glitch
                 newRoom = this.AddRoomToDungeon(rgen.Next(0, 4), currentRoom);
                 currentRoom = newRoom;
                 this.AddEnemies(currentRoom);
+                this.AddTraps(currentRoom);
             }
             
             //saving the completed room layout to the GameVariables class
@@ -196,15 +197,22 @@ namespace Glitch
         }
 
         //adds traps to the world
-        public void AddTraps()
+        public void AddTraps(Room currentRoom)
         {
             Vector2 sizeOfRoom = new Vector2(680 - 65, 345 - 20);
+            int numTrapsInRoom = rgen.Next(trapsLower, trapsUpper + 1);
+            float spaceOfTraps = sizeOfRoom.X / numTrapsInRoom;
 
-            for (int i = 0; i < rgen.Next(trapsLower, trapsUpper + 1); i++)
+            for (int i = 0; i < numTrapsInRoom; i++)
             {
                 if (trapsLeftToAdd > 0)
                 {
-
+                    GameVariables.TRAPS.Add(
+                        new Trap(
+                            new Vector2((spaceOfTraps * (i + 1)) + 65, rgen.Next(20, 346)),
+                            new Rectangle(),
+                            new Tuple<int, int>(currentRoom.PosX, currentRoom.PosY)
+                            ));
                     trapsLeftToAdd--;
                 }
             }
