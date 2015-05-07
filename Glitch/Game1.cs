@@ -133,7 +133,7 @@ namespace Glitch
 
             //Setting up rectangles for Collision Detection
             p1.CollDetect = new Rectangle(0, 0, (int)(playerFaceDown.Width * GameVariables.PLAYER_SCALE), (int)(playerFaceDown.Height * GameVariables.PLAYER_SCALE));
-            p1.PlayerBullet.CollDetect = new Rectangle(0, 0, (int)(playerBullet.Width * GameVariables.BULLET_SCALE), (int)(playerBullet.Height * GameVariables.BULLET_SCALE));
+            p1.PlayerBullet.CollDetect = new Rectangle(0, 0, (int)(bullet.Width * GameVariables.BULLET_SCALE), (int)(bullet.Height * GameVariables.BULLET_SCALE));
             foreach (Enemy e in GameVariables.ENEMIES)
             {
                 e.CollDetect = new Rectangle(0, 0, (int)(enemyFaceDown.Width * GameVariables.ENEMY_SCALE), (int)(enemyFaceDown.Height * GameVariables.ENEMY_SCALE));
@@ -180,7 +180,7 @@ namespace Glitch
                 kState = Keyboard.GetState();
                 this.ProcessInput(kState);
 
-                b1.Move();
+                p1.PlayerBullet.Move();
 
                 foreach (Enemy e in GameVariables.ENEMIES)
                 {
@@ -203,7 +203,6 @@ namespace Glitch
                 if (watch.ElapsedMilliseconds == randTime)
                 {
                     GameVariables.ENEMIES[rgen.Next(0,GameVariables.ENEMIES.Count)].Direction = randDirection;
-                    GameVariables.ENEMIES[rgen.Next(0, GameVariables.ENEMIES.Count)].Fire();
                     watch.Reset();
                 }
 
@@ -225,42 +224,6 @@ namespace Glitch
                 }
             }
 
-<<<<<<< HEAD
-=======
-            // collision detection 
-
-            //player collides with an enemy or enemy bullet
-            foreach (Enemy e in GameVariables.ENEMIES)
-            {
-                //if the player is colliding with an enemy
-                if (p1.CheckCollision(e))
-                {
-                    p1.Health--;
-
-                    e.IsActive = false;
-                }
-                if (p1.CheckCollision(e.EnemyBullet))
-                {
-                    p1.Health--;
-                }
-
-                if (e.CheckCollision(p1.PlayerBullet))
-                {
-                    e.IsActive = false;
-                    gMenu.Score++;
-                }
-            }
-
-            //player collides with a trap
-            foreach (Trap t in GameVariables.TRAPS)
-            {
-                if (p1.CheckCollision(t))
-                {
-                    p1.Health--;
-                }
-            }
-
->>>>>>> origin/master
             base.Update(gameTime);
         }
 
@@ -304,7 +267,7 @@ namespace Glitch
 
                 foreach (Enemy e in GameVariables.ENEMIES)
                 {
-                    if (GameVariables.CURRENT_ROOM.PosX == e.RoomNo.Item1 && GameVariables.CURRENT_ROOM.PosY == e.RoomNo.Item2)
+                    if (GameVariables.CURRENT_ROOM.PosX == e.RoomNo.Item1 && GameVariables.CURRENT_ROOM.PosY == e.RoomNo.Item2 && e.IsActive == true)
                     {
                         switch (e.Direction)
                         {
@@ -350,7 +313,7 @@ namespace Glitch
 
 
                 //drawing the bullets
-                b1.Draw(bullet, spriteBatch);
+                p1.PlayerBullet.Draw(bullet, spriteBatch);
             }
 
             if (kState.IsKeyDown(Keys.P) == true && sMenu.StartGame() == true)
@@ -406,20 +369,23 @@ namespace Glitch
                 if (p1.CheckCollision(e))
                 {
                     p1.Health--;
+                    Console.WriteLine("Player and Enemy");
 
                     e.IsActive = false;
                 }
                 if (p1.CheckCollision(e.EnemyBullet))
                 {
                     p1.Health--;
+                    Console.WriteLine("Player and Enemy Bullet");
+
                     e.EnemyBullet.IsActive = false;
                 }
 
-                if (e.CheckCollision(p1.Bullet))
+                if (e.CheckCollision(p1.PlayerBullet))
                 {
                     e.IsActive = false;
                     gMenu.Score++;
-                    p1.Bullet.IsActive = false;
+                    p1.PlayerBullet.IsActive = false;
                 }
             }
 
@@ -429,6 +395,7 @@ namespace Glitch
                 if (p1.CheckCollision(t))
                 {
                     p1.Health--;
+                    Console.WriteLine("Player and Trap");
                 }
             }
         }
