@@ -17,11 +17,10 @@ namespace Glitch
         KeyboardState kState;
         Color color1 = Color.White;
         Color color2 = Color.Black;
-        Color color3 = Color.Black;
         int x1 = 280;
         int x2 = 485;
-        int y1 = 200;
-        int y2 = 240;
+        int y1 = 260;
+        int y2 = 310;
         SpriteEffects spritEffects = SpriteEffects.None;
         bool[] dir = { false, false };
 
@@ -30,54 +29,31 @@ namespace Glitch
             kState = Keyboard.GetState();
             dir[0] = kState.IsKeyDown(Keys.W);
             dir[1] = kState.IsKeyDown(Keys.S);
-            if (y1 == 200)
+
+            if (y1 == 260)
             {
                 if (dir[1])
                 {
                     x1 = 280;
                     x2 = 485;
-                    y1 = 275;
-                    y2 = 325;
+                    y1 = 365;
+                    y2 = 415;
                     color1 = Color.Black;
                     color2 = Color.White;
                     Thread.Sleep(100);
                 }
             }
 
-            else if (y1 == 275)
+            else if (y1 == 365)
             {
                 if (dir[0])
                 {
                     x1 = 280;
                     x2 = 485;
-                    y1 = 200;
-                    y2 = 240;
+                    y1 = 260;
+                    y2 = 310;
                     color2 = Color.Black;
                     color1 = Color.White;
-                    Thread.Sleep(100);
-                }
-                else if (dir[1])
-                {
-                    x1 = 280;
-                    x2 = 485;
-                    y1 = 350;
-                    y2 = 400;
-                    color2 = Color.Black;
-                    color3 = Color.White;
-                    Thread.Sleep(100);
-                }
-            }
-
-            else if (y1 == 350)
-            {
-                if (dir[0])
-                {
-                    x1 = 280;
-                    x2 = 485;
-                    y1 = 275;
-                    y2 = 325;
-                    color3 = Color.Black;
-                    color2 = Color.White;
                     Thread.Sleep(100);
                 }
             }
@@ -89,7 +65,17 @@ namespace Glitch
 
             spriteBatch.DrawString(font,
                 "You Won!",
-                new Vector2(325, 50),
+                new Vector2(265, 50),
+                Color.Black,
+                0f,
+                new Vector2(0, 0),
+                2f,
+                spritEffects,
+                0);
+
+            spriteBatch.DrawString(font,
+                "Play Again?",
+                new Vector2(285, 160),
                 Color.Black,
                 0f,
                 new Vector2(0, 0),
@@ -99,7 +85,7 @@ namespace Glitch
 
             spriteBatch.DrawString(font,
                 "New Game",
-                new Vector2(300, 200),
+                new Vector2(300, 260),
                 color1,
                 0f,
                 new Vector2(0, 0),
@@ -108,19 +94,9 @@ namespace Glitch
                 0);
 
             spriteBatch.DrawString(font,
-                "Difficulty",
-                new Vector2(310, 275),
-                color2,
-                0f,
-                new Vector2(0, 0),
-                1.25f,
-                spritEffects,
-                0);
-
-            spriteBatch.DrawString(font,
                 "Quit Game",
-                new Vector2(300, 350),
-                color3,
+                new Vector2(300, 365),
+                color2,
                 0f,
                 new Vector2(0, 0),
                 1.25f,
@@ -190,18 +166,6 @@ namespace Glitch
         }
 
         public bool StartGame()
-        {
-            if (kState.IsKeyDown(Keys.Space) == true && y1 == 200)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-
-        public bool GameDifficulty()
         {
             if (kState.IsKeyDown(Keys.Space) == true && y1 == 275)
             {
