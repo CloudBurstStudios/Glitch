@@ -16,25 +16,18 @@ namespace Glitch
         //attributes
         protected int health;
         protected int lives;
-        private bool colliding;
 
         //properties
         public int Health
         {
             get { return health; }
-            set { health = value < 0 ? 0 : value; }
+            set { health = value; }
         }
 
         public int Lives
         {
             get { return lives; }
             set { lives = value < 0 ? 0 : value; }
-        }
-
-        public Boolean IsColliding
-        {
-            get { return colliding; }
-            set { colliding = value; }
         }
 
         //constructor

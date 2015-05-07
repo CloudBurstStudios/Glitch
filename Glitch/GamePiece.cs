@@ -15,8 +15,8 @@ namespace Glitch
     {
         //attributes
         protected Vector2 position;
-        //collision rectangle x, y, width, height
-        Rectangle colldetect;
+        protected Rectangle colldetect;
+        protected bool isActive;
 
 
         //properties
@@ -31,23 +31,34 @@ namespace Glitch
             set { colldetect = value; }
         }
 
+        public Rectangle BoundingBox
+        {
+            get
+            {
+                return new Rectangle((int)position.X, (int)position.Y, colldetect.Width, colldetect.Height);
+            }
+        }
+
+        public bool IsActive
+        {
+            get { return isActive; }
+            set { isActive = value; }
+        }
+
         //constructor                                                                         
         public GamePiece(Vector2 pos, Rectangle cd)
         {
             position = pos;
             colldetect = cd;
+            isActive = true;
         }
 
         //Method to check for collisions between game pieces
         public bool CheckCollision(GamePiece other)
         {
-            if (this.CollDetect.Intersects(other.CollDetect))
-            {
-                return true;
-            }
-            return false;
+            if (!this.isActive || !other.IsActive) return false;
+            return this.BoundingBox.Intersects(other.BoundingBox);
         }
-
 
         //Abstract method for drawing GamePieces
         public abstract void Draw(Texture2D sprite, SpriteBatch sb);

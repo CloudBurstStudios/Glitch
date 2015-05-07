@@ -28,7 +28,7 @@ namespace Glitch
             set { hasKey = value; }
         }
 
-        public Bullet Bullet
+        public Bullet PlayerBullet
         {
             get { return playerBullet; }
             set { playerBullet = value; }
