@@ -13,15 +13,6 @@ namespace Glitch
 {
     class Bullet:MoveableGamePiece
     {
-        //attribute and property for if the bullet is active
-        protected bool isActive;
-
-        public bool IsActive
-        {
-            get { return isActive; }
-            set { isActive = value; }
-        }
-
         //constructor
         public Bullet(Vector2 pos, Rectangle cd, int dir)
             : base(pos, cd, dir)

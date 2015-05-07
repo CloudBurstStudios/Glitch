@@ -30,7 +30,7 @@ namespace Glitch
         public override void Draw(Texture2D sprite, SpriteBatch sb)
         {
             sb.Begin();
-            sb.Draw(sprite, position, Color.White);
+            sb.Draw(sprite, new Rectangle((int)position.X, (int)position.Y, (int)(sprite.Width), (int)(sprite.Height)), Color.White);
             sb.End();
         }
     }

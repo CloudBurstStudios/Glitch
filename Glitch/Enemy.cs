@@ -21,14 +21,7 @@ namespace Glitch
         private Random rgen = new Random();
         private int speed;
 
-        private bool isActive;
-
         //properties
-        public bool IsActive
-        {
-            get { return isActive; }
-            set { isActive = value; }
-        }
 
         public Tuple<int, int> RoomNo
         {

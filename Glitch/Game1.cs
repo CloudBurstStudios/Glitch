@@ -128,6 +128,16 @@ namespace Glitch
             GameVariables.TRAP_DIMENSIONS = new Vector2(trap.Width, trap.Height);
 
             //Setting up rectangles for Collision Detection
+            p1.CollDetect = new Rectangle(0, 0, (int)(playerFaceDown.Width * GameVariables.PLAYER_SCALE), (int)(playerFaceDown.Height * GameVariables.PLAYER_SCALE));
+            p1.PlayerBullet.CollDetect = new Rectangle(0, 0, (int)(playerBullet.Width * GameVariables.BULLET_SCALE), (int)(playerBullet.Height * GameVariables.BULLET_SCALE));
+            foreach (Enemy e in GameVariables.ENEMIES)
+            {
+                e.CollDetect = new Rectangle(0, 0, (int)(enemyFaceDown.Width * GameVariables.ENEMY_SCALE), (int)(enemyFaceDown.Height * GameVariables.ENEMY_SCALE));
+            }
+            foreach (Trap t in GameVariables.TRAPS)
+            {
+                t.CollDetect = new Rectangle(0, 0, trap.Width, trap.Height);
+            }
 
         }
 
@@ -225,7 +235,7 @@ namespace Glitch
                     p1.Health--;
                 }
 
-                if (e.CheckCollision(p1.Bullet))
+                if (e.CheckCollision(p1.PlayerBullet))
                 {
                     e.IsActive = false;
                     gMenu.Score++;
@@ -274,6 +284,11 @@ namespace Glitch
                     if (GameVariables.CURRENT_ROOM.PosX == t.Room.Item1 && GameVariables.CURRENT_ROOM.PosY == t.Room.Item2)
                     {
                         t.Draw(trap, spriteBatch);
+                        t.IsActive = true;
+                    }
+                    else
+                    {
+                        t.IsActive = false;
                     }
                 }
 

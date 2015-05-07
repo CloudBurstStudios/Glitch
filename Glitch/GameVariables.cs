@@ -28,5 +28,9 @@ namespace Glitch
         public static Vector2 ENEMY_DIMENSIONS;
         public static Vector2 PLAYER_DIMENSIONS;
         public static Vector2 TRAP_DIMENSIONS;
+        public const float PLAYER_SCALE = 0.25f;
+        public const float ENEMY_SCALE = 0.1f;
+        public const float TRAP_SCALE = 1f;
+        public const float BULLET_SCALE = 0.03f;
     }
 }
