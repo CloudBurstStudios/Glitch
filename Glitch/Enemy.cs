@@ -36,7 +36,6 @@ namespace Glitch
         }
 
 
-
         // property
         public Bullet EnemyBullet
         {
@@ -111,7 +110,6 @@ namespace Glitch
         public override void Draw(Texture2D sprite, SpriteBatch sb)
         {
                 sb.Begin();
-                    //sb.Draw(sprite, position, new Rectangle(0, 0, sprite.Width, sprite.Height), Color.White, 0, position, 0.1f, spriteEffects, 0);
                 sb.Draw(sprite, new Rectangle((int)position.X, (int)position.Y, (int)(sprite.Width * 0.1), (int)(sprite.Height * 0.1)), Color.White);
                 sb.End();
         }

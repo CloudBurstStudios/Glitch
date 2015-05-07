@@ -25,8 +25,7 @@ namespace Glitch
         Texture2D playerFaceRight;
         Texture2D playerFaceDown;
         Texture2D playerFaceLeft;
-        Texture2D playerBullet;
-        Texture2D enemyBullet;
+        Texture2D bullet;
         Texture2D enemyFaceLeft;
         Texture2D enemyFaceRight;
         Texture2D enemyFaceUp;
@@ -38,6 +37,10 @@ namespace Glitch
         SpriteFont menuFont;
         Player p1;
         Bullet b1;
+        Rectangle pRect;
+        Rectangle tRect;
+        Rectangle eRect;
+        Rectangle bRect;
         StartMenu sMenu;
         PauseMenu pMenu;
         GameMenu gMenu;
@@ -64,10 +67,11 @@ namespace Glitch
             GameVariables.ENEMIES = new List<Enemy>();
             GameVariables.TRAPS = new List<Trap>();
             GameVariables.ENEMYPOS = new List<Vector2>();
-            b1 = new Bullet(new Vector2(20, 20), new Rectangle(), 0);
-            p1 = new Player(new Vector2(500, 175), new Rectangle(), 0, 5, b1);
-            worldGen = new WorldGeneration(b1);
-            wMenu = new WinMenu();
+            b1 = new Bullet(new Vector2(20, 20), bRect, 0);
+            bRect = new Rectangle((int)b1.Position.X, (int)b1.Position.Y, (int)GameVariables.BULLET_DIMENSIONS.X, (int)GameVariables.BULLET_DIMENSIONS.Y);
+            p1 = new Player(new Vector2(500, 175), pRect, 0, 5, b1);
+            pRect = new Rectangle((int)p1.Position.X, (int)p1.Position.Y, (int)GameVariables.PLAYER_DIMENSIONS.X, (int)GameVariables.PLAYER_DIMENSIONS.Y);
+            worldGen = new WorldGeneration(b1, eRect);
         }
 
         /// <summary>
@@ -109,12 +113,11 @@ namespace Glitch
 
             //Loading textures to use in game
             menuFont = this.Content.Load<SpriteFont>("mainFont");
-            enemyBullet = this.Content.Load<Texture2D>("playerbullet");
+            bullet = this.Content.Load<Texture2D>("playerbullet");
             enemyFaceLeft = this.Content.Load<Texture2D>("enemyFaceLeft");
             enemyFaceRight = this.Content.Load<Texture2D>("enemyFaceRight");
             enemyFaceUp = this.Content.Load<Texture2D>("enemyFaceUp");
             enemyFaceDown = this.Content.Load<Texture2D>("enemyFaceDown");
-            playerBullet = this.Content.Load<Texture2D>("playerbullet");
             playerFaceDown = this.Content.Load<Texture2D>("player_down");
             playerFaceUp = this.Content.Load<Texture2D>("player_up");
             playerFaceRight = this.Content.Load<Texture2D>("player_right");
@@ -126,6 +129,7 @@ namespace Glitch
             GameVariables.PLAYER_DIMENSIONS = new Vector2(playerFaceUp.Width, playerFaceUp.Height);
             GameVariables.ENEMY_DIMENSIONS = new Vector2(enemyFaceUp.Width, enemyFaceUp.Height);
             GameVariables.TRAP_DIMENSIONS = new Vector2(trap.Width, trap.Height);
+            GameVariables.BULLET_DIMENSIONS = new Vector2(bullet.Width, bullet.Height);
 
             //Setting up rectangles for Collision Detection
 
@@ -177,6 +181,8 @@ namespace Glitch
                     }
                 }
 
+                DetectCollisions();
+
                 Stopwatch watch = new Stopwatch();
                 Random rgen = new Random();
                 int randTime = rgen.Next(0, 26);
@@ -187,6 +193,7 @@ namespace Glitch
                 if (watch.ElapsedMilliseconds == randTime)
                 {
                     GameVariables.ENEMIES[rgen.Next(0,GameVariables.ENEMIES.Count)].Direction = randDirection;
+                    GameVariables.ENEMIES[rgen.Next(0, GameVariables.ENEMIES.Count)].Fire();
                     watch.Reset();
                 }
 
@@ -205,39 +212,6 @@ namespace Glitch
                 if (pMenu.QuitGame() == true || kstate.IsKeyDown(Keys.Escape) == true)
                 {
                     Exit();
-                }
-            }
-
-            // collision detection 
-
-            //player collides with an enemy or enemy bullet
-            foreach (Enemy e in GameVariables.ENEMIES)
-            {
-                //if the player is colliding with an enemy
-                if (p1.CheckCollision(e))
-                {
-                    p1.Health--;
-
-                    e.IsActive = false;
-                }
-                if (p1.CheckCollision(e.EnemyBullet))
-                {
-                    p1.Health--;
-                }
-
-                if (e.CheckCollision(p1.Bullet))
-                {
-                    e.IsActive = false;
-                    gMenu.Score++;
-                }
-            }
-
-            //player collides with a trap
-            foreach (Trap t in GameVariables.TRAPS)
-            {
-                if (p1.CheckCollision(t))
-                {
-                    p1.Health--;
                 }
             }
 
@@ -325,7 +299,7 @@ namespace Glitch
 
 
                 //drawing the bullets
-                b1.Draw(playerBullet, spriteBatch);
+                b1.Draw(bullet, spriteBatch);
             }
 
             if (kState.IsKeyDown(Keys.P) == true && sMenu.StartGame() == true)
@@ -374,7 +348,38 @@ namespace Glitch
         //method stub to detect collisions (code will be moved here later)
         public void DetectCollisions()
         {
+            //player collides with an enemy or enemy bullet
+            foreach (Enemy e in GameVariables.ENEMIES)
+            {
+                //if the player is colliding with an enemy
+                if (p1.CheckCollision(e))
+                {
+                    p1.Health--;
 
+                    e.IsActive = false;
+                }
+                if (p1.CheckCollision(e.EnemyBullet))
+                {
+                    p1.Health--;
+                    e.EnemyBullet.IsActive = false;
+                }
+
+                if (e.CheckCollision(p1.Bullet))
+                {
+                    e.IsActive = false;
+                    gMenu.Score++;
+                    p1.Bullet.IsActive = false;
+                }
+            }
+
+            //player collides with a trap
+            foreach (Trap t in GameVariables.TRAPS)
+            {
+                if (p1.CheckCollision(t))
+                {
+                    p1.Health--;
+                }
+            }
         }
       }
     }

@@ -28,5 +28,6 @@ namespace Glitch
         public static Vector2 ENEMY_DIMENSIONS;
         public static Vector2 PLAYER_DIMENSIONS;
         public static Vector2 TRAP_DIMENSIONS;
+        public static Vector2 BULLET_DIMENSIONS;
     }
 }

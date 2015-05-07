@@ -18,6 +18,7 @@ namespace Glitch
         private Random rgen = new Random();
         private Room root = new Room(0, 0);
         private Room currentRoom = null;
+        private Rectangle eRect;
         private int enemiesLeftToAdd;
         private int trapsLeftToAdd;
         private Bullet defaultBullet;
@@ -27,9 +28,10 @@ namespace Glitch
         private int trapsLower;
 
         //constructor
-        public WorldGeneration(Bullet bl)
+        public WorldGeneration(Bullet bl, Rectangle rect)
         {
             defaultBullet = bl;
+            eRect = rect;
         }
 
         //method that is called by the program to generate the world
@@ -189,9 +191,9 @@ namespace Glitch
                 if (enemiesLeftToAdd > 0)
                 {
                     GameVariables.ENEMIES.Add(
-                        new Enemy(
+                        new Enemy (
                             new Vector2(rgen.Next(65, 681), rgen.Next(20, 346)),
-                                new Rectangle(),
+                                eRect,
                                 1, defaultBullet,
                                 new Tuple<int,int>(currentRoom.PosX, currentRoom.PosY),
                                 rgen.Next(3,9)));
