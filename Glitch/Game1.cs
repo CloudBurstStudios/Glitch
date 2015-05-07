@@ -127,6 +127,8 @@ namespace Glitch
             GameVariables.ENEMY_DIMENSIONS = new Vector2(enemyFaceUp.Width, enemyFaceUp.Height);
             GameVariables.TRAP_DIMENSIONS = new Vector2(trap.Width, trap.Height);
 
+            //Setting up rectangles for Collision Detection
+
         }
 
         /// <summary>
@@ -159,7 +161,7 @@ namespace Glitch
             }
 
             //if start game is selected, run the game logic
-            if (wMenu.StartGame() == true && kState.IsKeyDown(Keys.P) == false)
+            if (sMenu.StartGame() == true && kState.IsKeyDown(Keys.P) == false)
             {
                 kState = Keyboard.GetState();
                 this.ProcessInput(kState);
@@ -255,7 +257,7 @@ namespace Glitch
             sMenu.DrawMenu(spriteBatch, menuFont, line);
 
             //if the start game option is selected, run this code
-            if (wMenu.StartGame() == true)
+            if (sMenu.StartGame() == true)
             {
                 //draw the background
                 spriteBatch.Begin();
@@ -265,21 +267,14 @@ namespace Glitch
 
                 gMenu.DrawText(spriteBatch, menuFont);
 
-                //switch statement for player movement
-                switch (p1.Direction)
+
+
+                foreach (Trap t in GameVariables.TRAPS)
                 {
-                    case 0: //up
-                        p1.Draw(playerFaceUp, spriteBatch);
-                        break;
-                    case 1: //right
-                        p1.Draw(playerFaceRight, spriteBatch);
-                        break;
-                    case 2: //down
-                        p1.Draw(playerFaceDown, spriteBatch);
-                        break;
-                    case 3: //left
-                        p1.Draw(playerFaceLeft, spriteBatch);
-                        break;
+                    if (GameVariables.CURRENT_ROOM.PosX == t.Room.Item1 && GameVariables.CURRENT_ROOM.PosY == t.Room.Item2)
+                    {
+                        t.Draw(trap, spriteBatch);
+                    }
                 }
 
                 foreach (Enemy e in GameVariables.ENEMIES)
@@ -310,13 +305,24 @@ namespace Glitch
                     }
                 }
 
-                foreach (Trap t in GameVariables.TRAPS)
+                //switch statement for player movement
+                switch (p1.Direction)
                 {
-                    if (GameVariables.CURRENT_ROOM.PosX == t.Room.Item1 && GameVariables.CURRENT_ROOM.PosY == t.Room.Item2)
-                    {
-                        t.Draw(trap, spriteBatch);
-                    }
+                    case 0: //up
+                        p1.Draw(playerFaceUp, spriteBatch);
+                        break;
+                    case 1: //right
+                        p1.Draw(playerFaceRight, spriteBatch);
+                        break;
+                    case 2: //down
+                        p1.Draw(playerFaceDown, spriteBatch);
+                        break;
+                    case 3: //left
+                        p1.Draw(playerFaceLeft, spriteBatch);
+                        break;
                 }
+
+
 
                 //drawing the bullets
                 b1.Draw(playerBullet, spriteBatch);
@@ -335,7 +341,7 @@ namespace Glitch
         public void ProcessInput(KeyboardState kstate)
         {
             //processes these keyboard inputs only during the game
-            if (wMenu.StartGame() == true)
+            if (sMenu.StartGame() == true)
             {
                 GraphicsDevice.Clear(Color.Black);
                 if (kstate.IsKeyDown(Keys.W))

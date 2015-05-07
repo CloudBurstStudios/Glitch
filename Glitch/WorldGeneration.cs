@@ -20,7 +20,6 @@ namespace Glitch
         private Room currentRoom = null;
         private int enemiesLeftToAdd;
         private int trapsLeftToAdd;
-        private Trap defaultTrap;
         private Bullet defaultBullet;
         private int enemiesUpper;
         private int enemiesLower;
@@ -67,10 +66,10 @@ namespace Glitch
             //Adding rooms to the level
             for (int i = 0; i < GameVariables.NUMBER_OF_ROOMS; i++)
             {
-                newRoom = this.AddRoomToDungeon(rgen.Next(0, 4), currentRoom);
-                currentRoom = newRoom;
                 this.AddEnemies(currentRoom);
                 this.AddTraps(currentRoom);
+                newRoom = this.AddRoomToDungeon(rgen.Next(0, 4), currentRoom);
+                currentRoom = newRoom;
             }
             
             //saving the completed room layout to the GameVariables class
@@ -180,6 +179,11 @@ namespace Glitch
         //adds enemies to the world
         public void AddEnemies(Room currentRoom)
         {
+            foreach (Enemy e in GameVariables.ENEMIES)
+            {
+                if (e.RoomNo.Item1 == currentRoom.PosX && e.RoomNo.Item2 == currentRoom.PosY) return;
+            }
+
             for (int i = 0; i < rgen.Next(enemiesLower, enemiesUpper + 1); i++)
             {
                 if (enemiesLeftToAdd > 0)
@@ -203,13 +207,18 @@ namespace Glitch
             int numTrapsInRoom = rgen.Next(trapsLower, trapsUpper + 1);
             float spaceOfTraps = sizeOfRoom.X / numTrapsInRoom;
 
+            foreach (Trap t in GameVariables.TRAPS)
+            {
+                if (t.Room.Item1 == currentRoom.PosX && t.Room.Item2 == currentRoom.PosY) return;
+            }
+
             for (int i = 0; i < numTrapsInRoom; i++)
             {
                 if (trapsLeftToAdd > 0)
                 {
                     GameVariables.TRAPS.Add(
                         new Trap(
-                            new Vector2((spaceOfTraps * (i + 1)) + 65, rgen.Next(20, 346)),
+                            new Vector2((spaceOfTraps * (i + 1)), rgen.Next(60, 351)),
                             new Rectangle(),
                             new Tuple<int, int>(currentRoom.PosX, currentRoom.PosY)
                             ));
