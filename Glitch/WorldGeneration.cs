@@ -68,10 +68,10 @@ namespace Glitch
             //Adding rooms to the level
             for (int i = 0; i < GameVariables.NUMBER_OF_ROOMS; i++)
             {
-                this.AddEnemies(currentRoom);
-                this.AddTraps(currentRoom);
                 newRoom = this.AddRoomToDungeon(rgen.Next(0, 4), currentRoom);
                 currentRoom = newRoom;
+                this.AddEnemies(currentRoom);
+                this.AddTraps(currentRoom);
             }
             
             //saving the completed room layout to the GameVariables class
@@ -110,6 +110,8 @@ namespace Glitch
                 {
                     //move into that room, try adding it again (Recursion)   
                     AddRoomToDungeon(0, current.Up);
+                    this.AddEnemies(current.Up);
+                    this.AddTraps(current.Up);
                 }
                 return current.Up;
             case 1: //right

@@ -131,17 +131,7 @@ namespace Glitch
             GameVariables.TRAP_DIMENSIONS = new Vector2(trap.Width, trap.Height);
             GameVariables.BULLET_DIMENSIONS = new Vector2(bullet.Width, bullet.Height);
 
-            //Setting up rectangles for Collision Detection
-            p1.CollDetect = new Rectangle(0, 0, (int)(playerFaceDown.Width * GameVariables.PLAYER_SCALE), (int)(playerFaceDown.Height * GameVariables.PLAYER_SCALE));
-            p1.PlayerBullet.CollDetect = new Rectangle(0, 0, (int)(bullet.Width * GameVariables.BULLET_SCALE), (int)(bullet.Height * GameVariables.BULLET_SCALE));
-            foreach (Enemy e in GameVariables.ENEMIES)
-            {
-                e.CollDetect = new Rectangle(0, 0, (int)(enemyFaceDown.Width * GameVariables.ENEMY_SCALE), (int)(enemyFaceDown.Height * GameVariables.ENEMY_SCALE));
-            }
-            foreach (Trap t in GameVariables.TRAPS)
-            {
-                t.CollDetect = new Rectangle(0, 0, trap.Width, trap.Height);
-            }
+
 
         }
 
@@ -161,6 +151,18 @@ namespace Glitch
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
+            //Setting up rectangles for Collision Detection
+            p1.CollDetect = new Rectangle(0, 0, (int)(playerFaceDown.Width * GameVariables.PLAYER_SCALE), (int)(playerFaceDown.Height * GameVariables.PLAYER_SCALE));
+            p1.PlayerBullet.CollDetect = new Rectangle(0, 0, (int)(bullet.Width * GameVariables.BULLET_SCALE), (int)(bullet.Height * GameVariables.BULLET_SCALE));
+            foreach (Enemy e in GameVariables.ENEMIES)
+            {
+                e.CollDetect = new Rectangle(0, 0, (int)(enemyFaceDown.Width * GameVariables.ENEMY_SCALE), (int)(enemyFaceDown.Height * GameVariables.ENEMY_SCALE));
+            }
+            foreach (Trap t in GameVariables.TRAPS)
+            {
+                t.CollDetect = new Rectangle(0, 0, trap.Width, trap.Height);
+            }
+
             //if you press the escape key or you press enter at 
             //the start menu while highlighting "quit game", you exit the program
             if (sMenu.EndGame() == true || kState.IsKeyDown(Keys.Escape))
@@ -275,8 +277,12 @@ namespace Glitch
 
                 foreach (Enemy e in GameVariables.ENEMIES)
                 {
-                    if (GameVariables.CURRENT_ROOM.PosX == e.RoomNo.Item1 && GameVariables.CURRENT_ROOM.PosY == e.RoomNo.Item2 && e.IsActive == true)
+                    if (e.IsDead) continue;
+
+                    if (GameVariables.CURRENT_ROOM.PosX == e.RoomNo.Item1 && GameVariables.CURRENT_ROOM.PosY == e.RoomNo.Item2)
                     {
+                        e.IsActive = true;
+
                         switch (e.Direction)
                         {
                             case 0: //up
@@ -291,9 +297,7 @@ namespace Glitch
                             case 3: //left
                                 e.Draw(enemyFaceLeft, spriteBatch);
                                 break;
-
                         }
-                        e.IsActive = true;
                     }
                     else
                     {
@@ -383,12 +387,16 @@ namespace Glitch
                 {
                     p1.Health--;
                     Console.WriteLine("Player and Enemy");
+<<<<<<< HEAD
                     GameVariables.ENEMIES_REMAINING--;
+=======
+>>>>>>> origin/master
                     e.IsActive = false;
                 }
 
                 if (e.CheckCollision(p1.PlayerBullet))
                 {
+                    e.IsDead = true;
                     e.IsActive = false;
                     gMenu.Score++;
                     p1.PlayerBullet.IsActive = false;

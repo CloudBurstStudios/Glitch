@@ -16,6 +16,7 @@ namespace Glitch
         //attributes
         protected int health;
         protected int lives;
+        protected bool isDead;
 
         //properties
         public int Health
@@ -30,10 +31,17 @@ namespace Glitch
             set { lives = value < 0 ? 0 : value; }
         }
 
+        public bool IsDead
+        {
+            get { return isDead; }
+            set { isDead = value; }
+        }
+
         //constructor
         public Entity(Vector2 pos, Rectangle cd, int dir)
             : base(pos, cd, dir)
         {
+            isDead = false;
         }
 
         public abstract override void Move();
