@@ -373,13 +373,6 @@ namespace Glitch
 
                     e.IsActive = false;
                 }
-                if (p1.CheckCollision(e.EnemyBullet))
-                {
-                    p1.Health--;
-                    Console.WriteLine("Player and Enemy Bullet");
-
-                    e.EnemyBullet.IsActive = false;
-                }
 
                 if (e.CheckCollision(p1.PlayerBullet))
                 {
