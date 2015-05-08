@@ -12,7 +12,7 @@ using System.Threading;
 
 namespace Glitch
 {
-    class WinMenu
+    class LoseMenu
     {
         KeyboardState kState;
         Color color1 = Color.White;
@@ -64,7 +64,7 @@ namespace Glitch
             spriteBatch.Begin();
 
             spriteBatch.DrawString(font,
-                "You Won!",
+                "You Lose...",
                 new Vector2(265, 50),
                 Color.Black,
                 0f,

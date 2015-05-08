@@ -46,6 +46,7 @@
     <Compile Include="GameMenu.cs" />
     <Compile Include="GamePiece.cs" />
     <Compile Include="GameVariables.cs" />
+    <Compile Include="LoseMenu.cs" />
     <Compile Include="PauseMenu.cs" />
     <Compile Include="Room.cs" />
     <Compile Include="StartMenu.cs" />
