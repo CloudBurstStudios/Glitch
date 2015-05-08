@@ -133,6 +133,8 @@ namespace Glitch
                 else
                 {
                     AddRoomToDungeon(1, current.Right);
+                    this.AddEnemies(current.Right);
+                    this.AddTraps(current.Right);
                 }
                 return current.Right;
             case 2: //down
@@ -154,6 +156,8 @@ namespace Glitch
                 else
                 {
                     AddRoomToDungeon(2, current.Down);
+                    this.AddEnemies(current.Down);
+                    this.AddTraps(current.Down);
                 }
                 return current.Down;
             case 3: //left
@@ -175,6 +179,8 @@ namespace Glitch
                 else
                 {
                     AddRoomToDungeon(3, current.Left);
+                    this.AddEnemies(current.Left);
+                    this.AddTraps(current.Left);
                 }
                 return current.Left;
             }
