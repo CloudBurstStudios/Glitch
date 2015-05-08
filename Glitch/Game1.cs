@@ -387,10 +387,6 @@ namespace Glitch
                 {
                     p1.Health--;
                     Console.WriteLine("Player and Enemy");
-<<<<<<< HEAD
-                    GameVariables.ENEMIES_REMAINING--;
-=======
->>>>>>> origin/master
                     e.IsActive = false;
                 }
 
@@ -400,6 +396,7 @@ namespace Glitch
                     e.IsActive = false;
                     gMenu.Score++;
                     p1.PlayerBullet.IsActive = false;
+                    GameVariables.ENEMIES_REMAINING--;
                 }
             }
 
