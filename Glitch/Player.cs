@@ -49,7 +49,7 @@ namespace Glitch
             if (!playerBullet.IsActive)
             {
                 playerBullet.Direction = direction;
-                playerBullet.Position = position;
+                playerBullet.Position = new Vector2(this.position.X + (this.BoundingBox.Width / 2), this.Position.Y + (this.BoundingBox.Height / 2));
                 playerBullet.IsActive = true;
             }
         }

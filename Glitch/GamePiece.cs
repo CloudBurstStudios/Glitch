@@ -56,7 +56,8 @@ namespace Glitch
         //Method to check for collisions between game pieces
         public bool CheckCollision(GamePiece other)
         {
-            if (!this.isActive || !other.IsActive) return false;
+            if (!this.isActive || !other.IsActive)
+            { return false; }
             return this.BoundingBox.Intersects(other.BoundingBox);
         }
 
