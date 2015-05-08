@@ -78,6 +78,7 @@ namespace Glitch
             GameVariables.ROOT_ROOM = root;
             GameVariables.CURRENT_ROOM = GameVariables.ROOT_ROOM;
 
+            GameVariables.ENEMIES_LEFT = GameVariables.NUMBER_OF_ENEMIES;
         }
 
         //adds a room to the level

@@ -168,14 +168,14 @@ namespace Glitch
 
             // TODO: Add your update logic here
             //if start game is not selected, update the menu
-            if (sMenu.StartGame() == false)
+            if (sMenu.StartGame() == false && GameVariables.ENEMIES_REMAINING > 0)
             {
                 kState = Keyboard.GetState();
                 sMenu.UpdateMenu();
             }
 
             //if start game is selected, run the game logic
-            if (sMenu.StartGame() == true && kState.IsKeyDown(Keys.P) == false)
+            if (sMenu.StartGame() == true && kState.IsKeyDown(Keys.P) == false && GameVariables.ENEMIES_REMAINING > 0)
             {
                 kState = Keyboard.GetState();
                 this.ProcessInput(kState);
@@ -208,7 +208,7 @@ namespace Glitch
 
 
             }
-            if (kState.IsKeyDown(Keys.P) == true && sMenu.StartGame() == true)
+            if (kState.IsKeyDown(Keys.P) == true && sMenu.StartGame() == true && GameVariables.ENEMIES_REMAINING > 0)
             {
                 KeyboardState kstate = Keyboard.GetState();
                 pMenu.UpdateMenu();
@@ -224,6 +224,12 @@ namespace Glitch
                 }
             }
 
+            if (GameVariables.ENEMIES_REMAINING == 0)
+            {
+                Console.WriteLine("No More Enemies");
+                wMenu.UpdateMenu();
+            }
+
             base.Update(gameTime);
         }
 
@@ -236,11 +242,13 @@ namespace Glitch
             //clear the screen
             GraphicsDevice.Clear(Color.CornflowerBlue);
             // TODO: Add your drawing code here
-
-            sMenu.DrawMenu(spriteBatch, menuFont, line);
+            if (GameVariables.ENEMIES_REMAINING > 0)
+            {
+                sMenu.DrawMenu(spriteBatch, menuFont, line);
+            }
 
             //if the start game option is selected, run this code
-            if (sMenu.StartGame() == true)
+            if (sMenu.StartGame() == true && GameVariables.ENEMIES_REMAINING > 0)
             {
                 //draw the background
                 spriteBatch.Begin();
@@ -316,10 +324,15 @@ namespace Glitch
                 p1.PlayerBullet.Draw(bullet, spriteBatch);
             }
 
-            if (kState.IsKeyDown(Keys.P) == true && sMenu.StartGame() == true)
+            if (kState.IsKeyDown(Keys.P) == true && sMenu.StartGame() == true && GameVariables.ENEMIES_REMAINING > 0)
             {
                 GraphicsDevice.Clear(Color.CornflowerBlue);
                 pMenu.DrawMenu(spriteBatch, menuFont, line);
+            }
+
+            if (GameVariables.ENEMIES_REMAINING == 0)
+            {
+                wMenu.DrawMenu(spriteBatch, menuFont, line);
             }
 
             base.Draw(gameTime);
@@ -370,7 +383,7 @@ namespace Glitch
                 {
                     p1.Health--;
                     Console.WriteLine("Player and Enemy");
-
+                    GameVariables.ENEMIES_REMAINING--;
                     e.IsActive = false;
                 }
 
