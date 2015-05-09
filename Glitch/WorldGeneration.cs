@@ -110,8 +110,8 @@ namespace Glitch
                 {
                     //move into that room, try adding it again (Recursion)   
                     AddRoomToDungeon(0, current.Up);
-                    this.AddEnemies(current.Up);
-                    this.AddTraps(current.Up);
+                    this.AddEnemies(current.Up.Up);
+                    this.AddTraps(current.Up.Up);
                 }
                 return current.Up;
             case 1: //right
@@ -133,8 +133,8 @@ namespace Glitch
                 else
                 {
                     AddRoomToDungeon(1, current.Right);
-                    this.AddEnemies(current.Right);
-                    this.AddTraps(current.Right);
+                    this.AddEnemies(current.Right.Right);
+                    this.AddTraps(current.Right.Right);
                 }
                 return current.Right;
             case 2: //down
@@ -156,8 +156,8 @@ namespace Glitch
                 else
                 {
                     AddRoomToDungeon(2, current.Down);
-                    this.AddEnemies(current.Down);
-                    this.AddTraps(current.Down);
+                    this.AddEnemies(current.Down.Down);
+                    this.AddTraps(current.Down.Down);
                 }
                 return current.Down;
             case 3: //left
@@ -179,8 +179,8 @@ namespace Glitch
                 else
                 {
                     AddRoomToDungeon(3, current.Left);
-                    this.AddEnemies(current.Left);
-                    this.AddTraps(current.Left);
+                    this.AddEnemies(current.Left.Left);
+                    this.AddTraps(current.Left.Left);
                 }
                 return current.Left;
             }

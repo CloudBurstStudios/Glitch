@@ -31,6 +31,20 @@ namespace Glitch
         Texture2D enemyFaceUp;
         Texture2D enemyFaceDown;
         Texture2D gameWall;
+        Texture2D gameWallBotLeftCorner;
+        Texture2D gameWallBotRightCorner;
+        Texture2D gameWallBotOnly;
+        Texture2D gameWallBotTri;
+        Texture2D gameWallHorizontal;
+        Texture2D gameWallLeftOnly;
+        Texture2D gameWallLeftTri;
+        Texture2D gameWallRightOnly;
+        Texture2D gameWallRightTri;
+        Texture2D gameWallTopLeftCorner;
+        Texture2D gameWallTopOnly;
+        Texture2D gameWallTopRightCorner;
+        Texture2D gameWallTopTriangle;
+        Texture2D gameWallVertical;
         Texture2D trap;
         Texture2D line;
         Random rgen;
@@ -126,6 +140,20 @@ namespace Glitch
             playerFaceLeft = this.Content.Load<Texture2D>("player_left");
             trap = this.Content.Load<Texture2D>("trap");
             gameWall = this.Content.Load<Texture2D>("Labratory");
+            gameWallBotLeftCorner = this.Content.Load<Texture2D>("Labratory_BotLeftCorner");
+            gameWallBotRightCorner = this.Content.Load<Texture2D>("Labratory_BotRightCorner");
+            gameWallBotOnly = this.Content.Load<Texture2D>("Labratory_BottomOnly");
+            gameWallBotTri = this.Content.Load<Texture2D>("Labratory_BottomTriangle");
+            gameWallHorizontal = this.Content.Load<Texture2D>("Labratory_Horizontal");
+            gameWallLeftOnly = this.Content.Load<Texture2D>("Labratory_LeftOnly");
+            gameWallLeftTri = this.Content.Load<Texture2D>("Labratory_LeftTriangle");
+            gameWallRightOnly = this.Content.Load<Texture2D>("Labratory_RightOnly");
+            gameWallRightTri = this.Content.Load<Texture2D>("Labratory_RightTriangle");
+            gameWallTopLeftCorner = this.Content.Load<Texture2D>("Labratory_TopLeftCorner");
+            gameWallTopOnly = this.Content.Load<Texture2D>("Labratory_TopOnly");
+            gameWallTopRightCorner = this.Content.Load<Texture2D>("Labratory_TopRightCorner");
+            gameWallTopTriangle = this.Content.Load<Texture2D>("Labratory_TopTriangle");
+            gameWallVertical = this.Content.Load<Texture2D>("Labratory_Vertical");
 
             //Setting up dimensions in GameVariables
             GameVariables.PLAYER_DIMENSIONS = new Vector2(playerFaceUp.Width, playerFaceUp.Height);
@@ -379,8 +407,10 @@ namespace Glitch
         public void RunDrawGame()
         {
             //draw the background
+            this.DrawBackground();
+
+            //draw the HUD
             spriteBatch.Begin();
-            spriteBatch.Draw(gameWall, new Rectangle(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), Color.Silver);
             spriteBatch.DrawString(menuFont, "" + p1.Health, new Vector2(120, 25), Color.Black);
             spriteBatch.End();
 
@@ -462,6 +492,118 @@ namespace Glitch
             p1.Health = 100;
             gMenu.Score = 0;
             worldGen.GenerateWorld();
+        }
+
+        //draws the background based on the adjacent rooms
+        public void DrawBackground()
+        {
+            spriteBatch.Begin();
+            //All 4 Rooms Open
+            if (GameVariables.CURRENT_ROOM.Down != null && GameVariables.CURRENT_ROOM.Right != null && GameVariables.CURRENT_ROOM.Left != null && GameVariables.CURRENT_ROOM.Up != null)
+            {
+                spriteBatch.Draw(gameWall, new Rectangle(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), Color.Silver);
+                spriteBatch.End();
+                return;
+            }
+            //Left and Down Open
+            if (GameVariables.CURRENT_ROOM.Left != null && GameVariables.CURRENT_ROOM.Down != null && GameVariables.CURRENT_ROOM.Right == null && GameVariables.CURRENT_ROOM.Up == null)
+            {
+                spriteBatch.Draw(gameWallBotLeftCorner, new Rectangle(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), Color.Silver);
+                spriteBatch.End();
+                return;
+            }
+            //Right and Down Open
+            if (GameVariables.CURRENT_ROOM.Left == null && GameVariables.CURRENT_ROOM.Down != null && GameVariables.CURRENT_ROOM.Right != null && GameVariables.CURRENT_ROOM.Up == null)
+            {
+                spriteBatch.Draw(gameWallBotRightCorner, new Rectangle(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), Color.Silver);
+                spriteBatch.End();
+                return;
+            }
+            //Only Down Open
+            if (GameVariables.CURRENT_ROOM.Left == null && GameVariables.CURRENT_ROOM.Down != null && GameVariables.CURRENT_ROOM.Right == null && GameVariables.CURRENT_ROOM.Up == null)
+            {
+                spriteBatch.Draw(gameWallBotOnly, new Rectangle(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), Color.Silver);
+                spriteBatch.End();
+                return;
+            }
+            //Down, Right, and Left Open
+            if (GameVariables.CURRENT_ROOM.Left != null && GameVariables.CURRENT_ROOM.Down != null && GameVariables.CURRENT_ROOM.Right != null && GameVariables.CURRENT_ROOM.Up == null)
+            {
+                spriteBatch.Draw(gameWallBotTri, new Rectangle(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), Color.Silver);
+                spriteBatch.End();
+                return;
+            }
+            //Right and Left Open
+            if (GameVariables.CURRENT_ROOM.Left != null && GameVariables.CURRENT_ROOM.Down == null && GameVariables.CURRENT_ROOM.Right != null && GameVariables.CURRENT_ROOM.Up == null)
+            {
+                spriteBatch.Draw(gameWallHorizontal, new Rectangle(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), Color.Silver);
+                spriteBatch.End();
+                return;
+            }
+            //Only Left Open
+            if (GameVariables.CURRENT_ROOM.Left != null && GameVariables.CURRENT_ROOM.Down == null && GameVariables.CURRENT_ROOM.Right == null && GameVariables.CURRENT_ROOM.Up == null)
+            {
+                spriteBatch.Draw(gameWallLeftOnly, new Rectangle(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), Color.Silver);
+                spriteBatch.End();
+                return;
+            }
+            //Left, Top, and Down Open
+            if (GameVariables.CURRENT_ROOM.Left != null && GameVariables.CURRENT_ROOM.Down == null && GameVariables.CURRENT_ROOM.Right == null && GameVariables.CURRENT_ROOM.Up != null)
+            {
+                spriteBatch.Draw(gameWallLeftTri, new Rectangle(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), Color.Silver);
+                spriteBatch.End();
+                return;
+            }
+            //Only Right Open
+            if (GameVariables.CURRENT_ROOM.Left == null && GameVariables.CURRENT_ROOM.Down == null && GameVariables.CURRENT_ROOM.Right != null && GameVariables.CURRENT_ROOM.Up == null)
+            {
+                spriteBatch.Draw(gameWallRightOnly, new Rectangle(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), Color.Silver);
+                spriteBatch.End();
+                return;
+            }
+            //Right, Top, and Down Open
+            if (GameVariables.CURRENT_ROOM.Left == null && GameVariables.CURRENT_ROOM.Down != null && GameVariables.CURRENT_ROOM.Right != null && GameVariables.CURRENT_ROOM.Up != null)
+            {
+                spriteBatch.Draw(gameWallRightTri, new Rectangle(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), Color.Silver);
+                spriteBatch.End();
+                return;
+            }
+            //Top and Left Open
+            if (GameVariables.CURRENT_ROOM.Left != null && GameVariables.CURRENT_ROOM.Down == null && GameVariables.CURRENT_ROOM.Right == null && GameVariables.CURRENT_ROOM.Up != null)
+            {
+                spriteBatch.Draw(gameWallTopLeftCorner, new Rectangle(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), Color.Silver);
+                spriteBatch.End();
+                return;
+            }
+            //Only Top Open
+            if (GameVariables.CURRENT_ROOM.Left == null && GameVariables.CURRENT_ROOM.Down == null && GameVariables.CURRENT_ROOM.Right == null && GameVariables.CURRENT_ROOM.Up != null)
+            {
+                spriteBatch.Draw(gameWallTopOnly, new Rectangle(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), Color.Silver);
+                spriteBatch.End();
+                return;
+            }
+            //Top and Right Open
+            if (GameVariables.CURRENT_ROOM.Left == null && GameVariables.CURRENT_ROOM.Down == null && GameVariables.CURRENT_ROOM.Right != null && GameVariables.CURRENT_ROOM.Up != null)
+            {
+                spriteBatch.Draw(gameWallTopRightCorner, new Rectangle(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), Color.Silver);
+                spriteBatch.End();
+                return;
+            }
+            //Top, Right, and Left Open
+            if (GameVariables.CURRENT_ROOM.Left != null && GameVariables.CURRENT_ROOM.Down == null && GameVariables.CURRENT_ROOM.Right != null && GameVariables.CURRENT_ROOM.Up != null)
+            {
+                spriteBatch.Draw(gameWallTopTriangle, new Rectangle(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), Color.Silver);
+                spriteBatch.End();
+                return;
+            }
+            //Top and Down Open
+            if (GameVariables.CURRENT_ROOM.Left == null && GameVariables.CURRENT_ROOM.Down != null && GameVariables.CURRENT_ROOM.Right == null && GameVariables.CURRENT_ROOM.Up != null)
+            {
+                spriteBatch.Draw(gameWallVertical, new Rectangle(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), Color.Silver);
+                spriteBatch.End();
+                return;
+            }
+            spriteBatch.End();
         }
       }
     }
