@@ -37,6 +37,7 @@ namespace Glitch
         //method that is called by the program to generate the world
         public void GenerateWorld()
         {
+            //preparing to generate
             currentRoom = root;
             Room newRoom;
             enemiesLeftToAdd = GameVariables.NUMBER_OF_ENEMIES;
@@ -46,7 +47,7 @@ namespace Glitch
             enemiesLower = GameVariables.NUMBER_OF_ENEMIES / GameVariables.NUMBER_OF_ROOMS;
             trapsLower = GameVariables.DENSITY_OF_TRAPS / GameVariables.NUMBER_OF_ROOMS;
 
-            //if the enemies/traps do not divide evenly into the rooms
+            //if enemies do not divide evenly into rooms, set upper bound 1 above lower
             if (GameVariables.NUMBER_OF_ENEMIES % GameVariables.NUMBER_OF_ROOMS != 0)
             {
                 enemiesUpper = enemiesLower + 1;
@@ -56,6 +57,7 @@ namespace Glitch
                 enemiesUpper = enemiesLower;
             }
 
+            //if traps do not divide evenly into rooms, set upper bound 1 above lower
             if (GameVariables.DENSITY_OF_TRAPS % GameVariables.NUMBER_OF_ROOMS != 0)
             {
                 trapsUpper = trapsLower + 1;
@@ -68,8 +70,11 @@ namespace Glitch
             //Adding rooms to the level
             for (int i = 0; i < GameVariables.NUMBER_OF_ROOMS; i++)
             {
+                //creates a new room and sets it equal to the current room
                 newRoom = this.AddRoomToDungeon(rgen.Next(0, 4), currentRoom);
                 currentRoom = newRoom;
+
+                //adding enemies and traps to the current room
                 this.AddEnemies(currentRoom);
                 this.AddTraps(currentRoom);
             }
@@ -77,7 +82,6 @@ namespace Glitch
             //saving the completed room layout to the GameVariables class
             GameVariables.ROOT_ROOM = root;
             GameVariables.CURRENT_ROOM = GameVariables.ROOT_ROOM;
-
             GameVariables.ENEMIES_REMAINING = GameVariables.NUMBER_OF_ENEMIES;
         }
 
@@ -114,6 +118,7 @@ namespace Glitch
                     this.AddTraps(current.Up.Up);
                 }
                 return current.Up;
+
             case 1: //right
                 //does the same thing as above, but for different direction
                 if (current.Right == null)
@@ -137,6 +142,7 @@ namespace Glitch
                     this.AddTraps(current.Right.Right);
                 }
                 return current.Right;
+
             case 2: //down
                 //does the same thing as above, but for different direction
                 if (current.Down == null)
@@ -160,6 +166,7 @@ namespace Glitch
                     this.AddTraps(current.Down.Down);
                 }
                 return current.Down;
+
             case 3: //left
                 //does the same thing as above, but for different direction
                 if (current.Left == null)
@@ -202,7 +209,7 @@ namespace Glitch
                     GameVariables.ENEMIES.Add(
                         new Enemy (
                             new Vector2(rgen.Next(65, 681), rgen.Next(20, 346)),
-                                eRect,
+                                new Rectangle(0,0,0,0),
                                 1, defaultBullet,
                                 new Tuple<int,int>(currentRoom.PosX, currentRoom.PosY),
                                 rgen.Next(3,9)));
@@ -230,7 +237,7 @@ namespace Glitch
                     GameVariables.TRAPS.Add(
                         new Trap(
                             new Vector2((spaceOfTraps * (i + 1)), rgen.Next(60, 351)),
-                            new Rectangle(),
+                            new Rectangle(0,0,0,0),
                             new Tuple<int, int>(currentRoom.PosX, currentRoom.PosY)
                             ));
                     trapsLeftToAdd--;

@@ -584,7 +584,7 @@ namespace Glitch
                 return;
             }
             //Left, Top, and Down Open
-            if (GameVariables.CURRENT_ROOM.Left != null && GameVariables.CURRENT_ROOM.Down == null && GameVariables.CURRENT_ROOM.Right == null && GameVariables.CURRENT_ROOM.Up != null)
+            if (GameVariables.CURRENT_ROOM.Left != null && GameVariables.CURRENT_ROOM.Down != null && GameVariables.CURRENT_ROOM.Right == null && GameVariables.CURRENT_ROOM.Up != null)
             {
                 spriteBatch.Draw(gameWallLeftTri, new Rectangle(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), Color.Silver);
                 spriteBatch.End();
