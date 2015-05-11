@@ -201,7 +201,7 @@ namespace Glitch
             }
         }
 
-        public bool GameDifficulty()
+        public bool Instructions()
         {
             if (kState.IsKeyDown(Keys.Space) == true && y1 == 275)
             {

@@ -180,18 +180,6 @@ namespace Glitch
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            //Setting up rectangles for Collision Detection
-            p1.CollDetect = new Rectangle(0, 0, (int)(playerFaceDown.Width * GameVariables.PLAYER_SCALE), (int)(playerFaceDown.Height * GameVariables.PLAYER_SCALE));
-            p1.PlayerBullet.CollDetect = new Rectangle(0, 0, (int)(bullet.Width * GameVariables.BULLET_SCALE), (int)(bullet.Height * GameVariables.BULLET_SCALE));
-            foreach (Enemy e in GameVariables.ENEMIES)
-            {
-                e.CollDetect = new Rectangle(0, 0, (int)(enemyFaceDown.Width * GameVariables.ENEMY_SCALE), (int)(enemyFaceDown.Height * GameVariables.ENEMY_SCALE));
-            }
-            foreach (Trap t in GameVariables.TRAPS)
-            {
-                t.CollDetect = new Rectangle(0, 0, trap.Width, trap.Height);
-            }
-
             //if you press the escape key or you press enter at 
             //the start menu while highlighting "quit game", you exit the program
             if (sMenu.EndGame() == true || kState.IsKeyDown(Keys.Escape))
@@ -203,6 +191,19 @@ namespace Glitch
             {
                 kState = Keyboard.GetState();
                 sMenu.UpdateMenu();
+            }
+
+            if (sMenu.Instructions() == true)
+            {
+                kState = Keyboard.GetState();
+                if (kState.GetPressedKeys().Length == 0)
+                {
+                    if (iMenu.DoneWithInstructions() == true)
+                    {
+                        kState = Keyboard.GetState();
+                        sMenu.UpdateMenu();
+                    }
+                }
             }
 
             //if start game is selected, run the game logic
@@ -279,6 +280,17 @@ namespace Glitch
                 sMenu.DrawMenu(spriteBatch, menuFont, line);
             }
 
+            if (sMenu.Instructions() == true)
+            {
+                GraphicsDevice.Clear(Color.CornflowerBlue);
+                iMenu.DrawMenu(spriteBatch, menuFont, line);
+
+                if (iMenu.DoneWithInstructions() == true)
+                {
+                    GraphicsDevice.Clear(Color.CornflowerBlue);
+                    sMenu.DrawMenu(spriteBatch, menuFont, line);
+                }
+            }
             //if the start game option is selected, run this code
             if (sMenu.StartGame() == true && GameVariables.ENEMIES_REMAINING > 0)
             {
@@ -352,6 +364,18 @@ namespace Glitch
         //method stub to detect collisions (code will be moved here later)
         public void DetectCollisions()
         {
+            //Setting up rectangles for Collision Detection
+            p1.CollDetect = new Rectangle(0, 0, (int)(playerFaceDown.Width * GameVariables.PLAYER_SCALE), (int)(playerFaceDown.Height * GameVariables.PLAYER_SCALE));
+            p1.PlayerBullet.CollDetect = new Rectangle(0, 0, (int)(bullet.Width * GameVariables.BULLET_SCALE), (int)(bullet.Height * GameVariables.BULLET_SCALE));
+            foreach (Enemy e in GameVariables.ENEMIES)
+            {
+                e.CollDetect = new Rectangle(0, 0, (int)(enemyFaceDown.Width * GameVariables.ENEMY_SCALE), (int)(enemyFaceDown.Height * GameVariables.ENEMY_SCALE));
+            }
+            foreach (Trap t in GameVariables.TRAPS)
+            {
+                t.CollDetect = new Rectangle(0, 0, trap.Width, trap.Height);
+            }
+
             //player collides with an enemy or enemy bullet
             foreach (Enemy e in GameVariables.ENEMIES)
             {
