@@ -52,7 +52,6 @@ namespace Glitch
         Player p1;
         Bullet b1;
         Rectangle pRect;
-        Rectangle tRect;
         Rectangle eRect;
         Rectangle bRect;
         StartMenu sMenu;
@@ -85,7 +84,7 @@ namespace Glitch
             GameVariables.ENEMYPOS = new List<Vector2>();
             b1 = new Bullet(new Vector2(20, 20), bRect, 0);
             bRect = new Rectangle((int)b1.Position.X, (int)b1.Position.Y, (int)GameVariables.BULLET_DIMENSIONS.X, (int)GameVariables.BULLET_DIMENSIONS.Y);
-            p1 = new Player(new Vector2(500, 175), pRect, 0, 100000, b1);
+            p1 = new Player(new Vector2(500, 175), pRect, 0, 100, b1);
             pRect = new Rectangle((int)p1.Position.X, (int)p1.Position.Y, (int)GameVariables.PLAYER_DIMENSIONS.X, (int)GameVariables.PLAYER_DIMENSIONS.Y);
             worldGen = new WorldGeneration(b1, eRect);
         }
@@ -249,6 +248,18 @@ namespace Glitch
             {
                 kState = Keyboard.GetState();
                 lMenu.UpdateMenu();
+
+                if (lMenu.StartGame() == true)
+                {
+                    kState = Keyboard.GetState();
+                    ResetGame();
+                    RunUpdateGame();
+                }
+
+                if (lMenu.EndGame() == true)
+                {
+                    Exit();
+                }
             }
 
             base.Update(gameTime);
@@ -297,6 +308,7 @@ namespace Glitch
 
             if (p1.Health <= 0)
             {
+                GraphicsDevice.Clear(Color.CornflowerBlue);
                 lMenu.DrawMenu(spriteBatch, menuFont, line);
             }
 
