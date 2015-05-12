@@ -195,18 +195,15 @@ namespace Glitch
                 kState = Keyboard.GetState();
                 sMenu.UpdateMenu();
             }
-
+            //if the directions menu is selected, update the instuctions menu
             if (sMenu.Instructions() == true)
             {
                 kState = Keyboard.GetState();
-                if (kState.GetPressedKeys().Length == 0)
-                {
                     if (iMenu.DoneWithInstructions() == true)
                     {
                         kState = Keyboard.GetState();
                         sMenu.UpdateMenu();
                     }
-                }
             }
 
             //if start game is selected, run the game logic

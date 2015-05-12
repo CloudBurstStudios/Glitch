@@ -108,8 +108,8 @@ namespace Glitch
                 0);
 
             spriteBatch.DrawString(font,
-                "Directions",
-                new Vector2(305, 275),
+                "Instructions",
+                new Vector2(295, 275),
                 color2,
                 0f,
                 new Vector2(0, 0),

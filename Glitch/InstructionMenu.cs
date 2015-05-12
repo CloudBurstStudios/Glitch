@@ -15,6 +15,12 @@ namespace Glitch
     class InstructionMenu
     {
         KeyboardState kState;
+
+        public void UpdateMenu()
+        {
+            kState = Keyboard.GetState();
+        }
+
         protected void DrawText(SpriteBatch spriteBatch, SpriteFont font)
         {
             spriteBatch.Begin();
@@ -83,7 +89,6 @@ namespace Glitch
             spriteBatch.End();
         }
 
-       
         public void DrawMenu(SpriteBatch spriteBatch, SpriteFont spriteFont, Texture2D texture)
         {
             DrawText(spriteBatch, spriteFont);
