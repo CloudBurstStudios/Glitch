@@ -111,6 +111,9 @@ namespace Glitch
 
             //generates the world
             worldGen.GenerateWorld();
+            
+            //sets player health to the initial value passed in through the tool
+            p1.Health = GameVariables.INITIAL_HEALTH;
         }
 
         /// <summary>

@@ -15,6 +15,9 @@ namespace Glitch
         int numRooms = 1;
         int numEnemies = 0;
         int trapDensity = 0;
+        int initHealth = 10;
+        int eMinSpeed = 1;
+        int eMaxSpeed = 15;
 
         //reads in the information from the binary file
         public void ReadData()
@@ -29,6 +32,9 @@ namespace Glitch
                 numRooms = input.ReadInt32();
                 numEnemies = input.ReadInt32();
                 trapDensity = input.ReadInt32();
+                initHealth = input.ReadInt32();
+                eMinSpeed = input.ReadInt32();
+                eMaxSpeed = input.ReadInt32();
             }
             //prints error message to console (debugging purposes)
             catch (Exception e)
@@ -41,6 +47,9 @@ namespace Glitch
                 GameVariables.NUMBER_OF_ROOMS = numRooms-1;
                 GameVariables.NUMBER_OF_ENEMIES = numEnemies;
                 GameVariables.DENSITY_OF_TRAPS = trapDensity;
+                GameVariables.INITIAL_HEALTH = initHealth;
+                GameVariables.MIN_ENEMY_SPEED = eMinSpeed;
+                GameVariables.MAX_ENEMY_SPEED = eMaxSpeed;
             }
         }
     }

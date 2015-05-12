@@ -212,7 +212,7 @@ namespace Glitch
                                 new Rectangle(0,0,0,0),
                                 1, defaultBullet,
                                 new Tuple<int,int>(currentRoom.PosX, currentRoom.PosY),
-                                rgen.Next(3,9)));
+                                rgen.Next(GameVariables.MIN_ENEMY_SPEED, GameVariables.MAX_ENEMY_SPEED + 1)));
                     enemiesLeftToAdd--;
                 }
             }

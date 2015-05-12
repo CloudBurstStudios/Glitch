@@ -20,6 +20,9 @@ namespace Glitch
         public static int NUMBER_OF_ROOMS;
         public static int NUMBER_OF_ENEMIES;
         public static int DENSITY_OF_TRAPS;
+        public static int INITIAL_HEALTH;
+        public static int MIN_ENEMY_SPEED;
+        public static int MAX_ENEMY_SPEED;
         public static int ENEMIES_REMAINING;
         public static Room ROOT_ROOM;
         public static Room CURRENT_ROOM;
