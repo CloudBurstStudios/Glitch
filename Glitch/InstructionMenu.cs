@@ -45,6 +45,15 @@ namespace Glitch
                 SpriteEffects.None,
                 0);
 
+            spriteBatch.DrawString(font,
+               "P to Pause",
+               new Vector2(320, 275),
+               Color.Black,
+               0f,
+               new Vector2(0, 0),
+               1.25f,
+               SpriteEffects.None,
+               0);
 
             spriteBatch.DrawString(font,
                 "Shoot with Space",
