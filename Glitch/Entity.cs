@@ -11,6 +11,7 @@ using Microsoft.Xna.Framework.GamerServices;
 
 namespace Glitch
 {
+    //represents an entity in the game (player and enemy) - is a moveable game piece
     abstract class Entity : MoveableGamePiece
     {
         //attributes
@@ -41,12 +42,14 @@ namespace Glitch
         public Entity(Vector2 pos, Rectangle cd, int dir)
             : base(pos, cd, dir)
         {
+            //is not dead by default
             isDead = false;
         }
 
+        //abstract method to move the entity
         public abstract override void Move();
+
+        //abstract void to draw the entity
         public abstract override void Draw(Texture2D sprite, SpriteBatch sb);
-
-
     }
 }

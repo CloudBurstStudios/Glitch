@@ -33,6 +33,8 @@ namespace Glitch
         public static Vector2 PLAYER_DIMENSIONS;
         public static Vector2 TRAP_DIMENSIONS;
         public static Vector2 BULLET_DIMENSIONS;
+
+        //constant game attributes
         public const double PLAYER_SCALE = 0.2;
         public const double ENEMY_SCALE = 0.1;
         public const double TRAP_SCALE = 0.7;

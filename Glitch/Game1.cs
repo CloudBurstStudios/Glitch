@@ -67,25 +67,38 @@ namespace Glitch
         public Game1()
             : base()
         {
+            //setting up the graphics
             graphics = new GraphicsDeviceManager(this);
             graphics.IsFullScreen = false;
             graphics.ApplyChanges();
+
+            //setting content folder
             Content.RootDirectory = "Content";
+
+            //initializing the menus
             sMenu = new StartMenu();
             pMenu = new PauseMenu();
             gMenu = new GameMenu();
             wMenu = new WinMenu();
             iMenu = new InstructionMenu();
             lMenu = new LoseMenu();
-            tLoader = new ToolLoader();
+
+            //creating a new random object to be used for random number generations
             rgen = new Random();
+
+            //initializes the lists in GameVariables
             GameVariables.ENEMIES = new List<Enemy>();
             GameVariables.TRAPS = new List<Trap>();
             GameVariables.ENEMYPOS = new List<Vector2>();
+
+            //initializing the bullet and player
             b1 = new Bullet(new Vector2(20, 20), bRect, 0);
             bRect = new Rectangle((int)b1.Position.X, (int)b1.Position.Y, (int)GameVariables.BULLET_DIMENSIONS.X, (int)GameVariables.BULLET_DIMENSIONS.Y);
             p1 = new Player(new Vector2(500, 175), pRect, 0, 100, b1);
             pRect = new Rectangle((int)p1.Position.X, (int)p1.Position.Y, (int)GameVariables.PLAYER_DIMENSIONS.X, (int)GameVariables.PLAYER_DIMENSIONS.Y);
+
+            //initializing the tool loader and world generation
+            tLoader = new ToolLoader();
             worldGen = new WorldGeneration(b1, eRect);
         }
 
@@ -162,9 +175,6 @@ namespace Glitch
             GameVariables.ENEMY_DIMENSIONS = new Vector2(enemyFaceUp.Width, enemyFaceUp.Height);
             GameVariables.TRAP_DIMENSIONS = new Vector2(trap.Width, trap.Height);
             GameVariables.BULLET_DIMENSIONS = new Vector2(bullet.Width, bullet.Height);
-
-
-
         }
 
         /// <summary>
@@ -173,7 +183,7 @@ namespace Glitch
         /// </summary>
         protected override void UnloadContent()
         {
-            // TODO: Unload any non ContentManager content here
+            //nothing is to be unloaded
         }
 
         /// <summary>
@@ -188,7 +198,6 @@ namespace Glitch
             if (sMenu.EndGame() == true || kState.IsKeyDown(Keys.Escape))
                 Exit();
 
-            // TODO: Add your update logic here
             //if start game is not selected, update the menu
             if (sMenu.StartGame() == false && GameVariables.ENEMIES_REMAINING > 0 && p1.Health > 0)
             {
@@ -274,12 +283,14 @@ namespace Glitch
         {
             //clear the screen
             GraphicsDevice.Clear(Color.CornflowerBlue);
-            // TODO: Add your drawing code here
+
+            //while there are still enemies left
             if (GameVariables.ENEMIES_REMAINING > 0)
             {
                 sMenu.DrawMenu(spriteBatch, menuFont, line);
             }
 
+            //if the instructions are being shown
             if (sMenu.Instructions() == true)
             {
                 GraphicsDevice.Clear(Color.CornflowerBlue);
@@ -291,6 +302,7 @@ namespace Glitch
                     sMenu.DrawMenu(spriteBatch, menuFont, line);
                 }
             }
+
             //if the start game option is selected, run this code
             if (sMenu.StartGame() == true && GameVariables.ENEMIES_REMAINING > 0)
             {
@@ -303,6 +315,7 @@ namespace Glitch
                 pMenu.DrawMenu(spriteBatch, menuFont, line);
             }
 
+            //if there are no enemies remaining
             if (GameVariables.ENEMIES_REMAINING == 0)
             {
                 wMenu.DrawMenu(spriteBatch, menuFont, line);
@@ -327,13 +340,15 @@ namespace Glitch
             base.Draw(gameTime);
         }
 
-        //processes the keystrokes of the input
+        //processes the keystrokes of the user input
         public void ProcessInput(KeyboardState kstate)
         {
             //processes these keyboard inputs only during the game
             if (sMenu.StartGame() == true)
             {
                 GraphicsDevice.Clear(Color.Black);
+
+                //WASD used to navigate / move
                 if (kstate.IsKeyDown(Keys.W))
                 {
                     p1.Direction = 0;
@@ -354,6 +369,8 @@ namespace Glitch
                     p1.Direction = 1;
                     p1.Move();
                 }
+
+                //space key used to fire
                 if (kstate.IsKeyDown(Keys.Space))
                 {
                     p1.Fire();
@@ -361,7 +378,7 @@ namespace Glitch
             }
         }
 
-        //method stub to detect collisions (code will be moved here later)
+        //method to detect collisions
         public void DetectCollisions()
         {
             //Setting up rectangles for Collision Detection
@@ -382,17 +399,28 @@ namespace Glitch
                 //if the player is colliding with an enemy
                 if (p1.CheckCollision(e))
                 {
+                    //decrement the health
                     p1.Health--;
+                    //write the collision (debugging purposes
                     Console.WriteLine("Player and Enemy");
+                    
                     e.IsActive = false;
                 }
 
+                //if the enemy is colliding with the player bullet
                 if (e.CheckCollision(p1.PlayerBullet))
                 {
+                    //sets the "isDead" of enemy to false so it will no longer be used
                     e.IsDead = true;
                     e.IsActive = false;
+
+                    //increments the score
                     gMenu.Score++;
+
+                    //deactivates the bullet
                     p1.PlayerBullet.IsActive = false;
+
+                    //decrements the "enemies remaining" attribute
                     GameVariables.ENEMIES_REMAINING--;
                 }
             }
@@ -402,30 +430,39 @@ namespace Glitch
             {
                 if (p1.CheckCollision(t))
                 {
+                    //decrement the health
                     p1.Health--;
+                    //write the collision (debugging purposes)
                     Console.WriteLine("Player and Trap");
                 }
             }
         }
 
+        //Runs the update logic while the game is being played
         public void RunUpdateGame()
         {
+            //gets a keyboard state and processes it 
             kState = Keyboard.GetState();
             this.ProcessInput(kState);
 
+            //moves the bullet
             p1.PlayerBullet.Move();
 
+            //moves the enemies if they are active
             foreach (Enemy e in GameVariables.ENEMIES)
             {
                 if (e.IsActive)
                 {
                     e.Move();
+                    //writes the enemy position (debugging purposes)
                     Console.WriteLine(e.Position.X + " " + e.Position.Y);
                 }
             }
 
+            //detects collisions
             DetectCollisions();
 
+            //activates a stopwatch and generates integers for random time and direction
             Stopwatch watch = new Stopwatch();
             Random rgen = new Random();
             int randTime = rgen.Next(0, 26);
@@ -433,6 +470,7 @@ namespace Glitch
 
             watch.Start();
 
+            //if random times match, change the direction of a random enemy to a random direction
             if (watch.ElapsedMilliseconds == randTime)
             {
                 GameVariables.ENEMIES[rgen.Next(0, GameVariables.ENEMIES.Count)].Direction = randDirection;
@@ -440,6 +478,7 @@ namespace Glitch
             }
         }
 
+        //Runs the logic to draw the game if it is being played
         public void RunDrawGame()
         {
             //draw the background
@@ -452,8 +491,10 @@ namespace Glitch
 
             gMenu.DrawText(spriteBatch, menuFont);
 
+            //Draws the traps to the screen
             foreach (Trap t in GameVariables.TRAPS)
             {
+                //If the room coordinates match the current room, draw it
                 if (GameVariables.CURRENT_ROOM.PosX == t.Room.Item1 && GameVariables.CURRENT_ROOM.PosY == t.Room.Item2)
                 {
                     t.Draw(trap, spriteBatch);
@@ -465,6 +506,7 @@ namespace Glitch
                 }
             }
 
+            //Does the same as the above logic for traps, but with enemies
             foreach (Enemy e in GameVariables.ENEMIES)
             {
                 if (e.IsDead) continue;
@@ -495,7 +537,7 @@ namespace Glitch
                 }
             }
 
-            //switch statement for player movement
+            //draws player based on direction
             switch (p1.Direction)
             {
                 case 0: //up
@@ -516,17 +558,25 @@ namespace Glitch
             p1.PlayerBullet.Draw(bullet, spriteBatch);
         }
 
+        //resets the game after the player has lost or won
         public void ResetGame()
         {
+            //Clears all the enemies, traps, and rooms
             GameVariables.ENEMIES.Clear();
             GameVariables.TRAPS.Clear();
             GameVariables.ROOT_ROOM.Down = null;
             GameVariables.ROOT_ROOM.Up = null;
             GameVariables.ROOT_ROOM.Left = null;
             GameVariables.ROOT_ROOM.Right = null;
+
+            //resets back to the root room and gives the player full health
             GameVariables.CURRENT_ROOM = GameVariables.ROOT_ROOM;
-            p1.Health = 100;
+            p1.Health = GameVariables.INITIAL_HEALTH;
+
+            //resets the score
             gMenu.Score = 0;
+
+            //re-generates the world
             worldGen.GenerateWorld();
         }
 

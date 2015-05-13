@@ -11,6 +11,7 @@ using Microsoft.Xna.Framework.GamerServices;
 
 namespace Glitch
 {
+    //represents a game piece in the game
     abstract class GamePiece
     {
         //attributes
@@ -63,12 +64,6 @@ namespace Glitch
 
         //Abstract method for drawing GamePieces
         public abstract void Draw(Texture2D sprite, SpriteBatch sb);
-
-        public override string ToString()
-        {
-            return "rectangle: " + colldetect;
-        }
-
     }
 }
 

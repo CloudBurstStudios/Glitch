@@ -11,10 +11,13 @@ using Microsoft.Xna.Framework.GamerServices;
 
 namespace Glitch
 {
+    //represents an individual trap placed on the floor of the level
     class Trap : GamePiece
     {
+        //attribute
         private Tuple<int, int> room;
 
+        //property
         public Tuple<int,int> Room
         {
             get { return room; }
@@ -27,6 +30,7 @@ namespace Glitch
             room = roomNo;
         }
 
+        //draws the trap to the screen
         public override void Draw(Texture2D sprite, SpriteBatch sb)
         {
             sb.Begin();

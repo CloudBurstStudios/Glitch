@@ -126,9 +126,10 @@ namespace Glitch
         public override void Draw(Texture2D sprite, SpriteBatch sb)
         {
             sb.Begin();
-                    //sb.Draw(sprite, position, null, Color.White, 0, position, 0.01f, SpriteEffects.None, 0);
+                    
             sb.Draw(sprite, new Rectangle((int)position.X, (int)position.Y, (int)(sprite.Width * 0.25), (int)(sprite.Height * 0.25)), Color.White);
-                    Console.WriteLine("P: " + position.X + " " + position.Y);
+            //writes the player position (debugging purposes)        
+            Console.WriteLine("P: " + position.X + " " + position.Y);
             sb.End();
         }
     }

@@ -11,15 +11,18 @@ using Microsoft.Xna.Framework.GamerServices;
 
 namespace Glitch
 {
+    //Represents an individual bullet, is a moveable game piece
     class Bullet:MoveableGamePiece
     {
         //constructor
         public Bullet(Vector2 pos, Rectangle cd, int dir)
             : base(pos, cd, dir)
         {
+            //bullet is not active by default
             isActive = false;
         }
 
+        //moves the bullet
         public override void Move()
         {
             //Breaks out of method if bullet is not active
@@ -53,6 +56,8 @@ namespace Glitch
             if (!this.isActive) return;
 
             sb.Begin();
+
+            //same draw call, but changes rotation value based on direction (same directions as above)
             switch (direction)
             {
                 case 0:
@@ -68,6 +73,7 @@ namespace Glitch
                     sb.Draw(sprite, position, new Rectangle(0, 0, sprite.Width, sprite.Height), Color.White, 0, position, 0.03f, SpriteEffects.None, 0);
                     break;
             }
+
             sb.End();
 
         }

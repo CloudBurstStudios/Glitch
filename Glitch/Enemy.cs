@@ -12,6 +12,7 @@ using System.Diagnostics;
 
 namespace Glitch
 {
+    //represents an individual enemy, is an entity
     class Enemy : Entity
     {
         //attributes
@@ -22,14 +23,11 @@ namespace Glitch
         private int speed;
 
         //properties
-
         public Tuple<int, int> RoomNo
         {
             get { return roomNo; }
         }
 
-
-        // property
         public Bullet EnemyBullet
         {
             get { return enemyBullet; }
@@ -47,6 +45,7 @@ namespace Glitch
             speed = spd;
         }
 
+        //moves the enemy
         public override void Move()
         {
             switch (direction)
@@ -65,6 +64,7 @@ namespace Glitch
                     break;
             }
 
+            //handles moving off the edge of the screen by changing directions
             if (position.Y < 20)
             {
                 direction = 2;
@@ -84,12 +84,9 @@ namespace Glitch
             {
                 direction = 3;
             }
-
-
-            
-
         }
 
+        //Fires the enemy bullet
         public void Fire()
         {
             if (!enemyBullet.IsActive)
@@ -100,6 +97,7 @@ namespace Glitch
             }
         }
 
+        //draws the enemy
         public override void Draw(Texture2D sprite, SpriteBatch sb)
         {
                 sb.Begin();
