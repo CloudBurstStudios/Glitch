@@ -44,7 +44,7 @@ namespace Glitch
             //saves the data values to the game variables class
             finally
             {
-                GameVariables.NUMBER_OF_ROOMS = numRooms-1;
+                GameVariables.NUMBER_OF_ROOMS = numRooms;
                 GameVariables.NUMBER_OF_ENEMIES = numEnemies;
                 GameVariables.DENSITY_OF_TRAPS = trapDensity;
                 GameVariables.INITIAL_HEALTH = initHealth;
