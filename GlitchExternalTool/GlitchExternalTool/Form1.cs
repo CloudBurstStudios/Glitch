@@ -79,8 +79,7 @@ namespace GlitchExternalTool
                 output.Write(eSpeedMin);
                 output.Write(eSpeedMax);
 
-                //sends a message that changes have been saved
-                MessageBox.Show("Operation Complete.  Changes have been saved.");
+                //sends a message that changes have been saved               MessageBox.Show("Operation Complete.  Changes have been saved.");
             }
                 //reports any problems with the writing of the files
             catch (Exception e)
