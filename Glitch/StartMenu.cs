@@ -14,6 +14,7 @@ namespace Glitch
 {
     class StartMenu
     {
+        //attributes
         KeyboardState kState;
         Color color1 = Color.White;
         Color color2 = Color.Black;
@@ -25,11 +26,16 @@ namespace Glitch
         SpriteEffects spritEffects = SpriteEffects.None;
         bool[] dir = { false, false };
 
+        //updates the menu
         public void UpdateMenu()
         {
+            // sets up and down directions for keyboard
             kState = Keyboard.GetState();
             dir[0] = kState.IsKeyDown(Keys.W);
             dir[1] = kState.IsKeyDown(Keys.S);
+
+            //if statements used to
+            //switch between new game and quit game
             if (y1 == 200)
             {
                 if (dir[1])
@@ -83,6 +89,7 @@ namespace Glitch
             }
         }
 
+        //draws the text on screen
         protected void DrawText(SpriteBatch spriteBatch, SpriteFont font)
         {
             spriteBatch.Begin();
@@ -130,6 +137,7 @@ namespace Glitch
             spriteBatch.End();
         }
 
+        //draws the selection lines on screen
         protected void DrawLine(SpriteBatch spriteBatch, Texture2D texture)
         {
             spriteBatch.Begin();
@@ -161,6 +169,7 @@ namespace Glitch
             spriteBatch.End();
         }
 
+        //method to draw line
         void Line(SpriteBatch sb, Vector2 start, Vector2 end, Texture2D t)
         {
             Vector2 edge = end - start;
@@ -183,12 +192,14 @@ namespace Glitch
                 0);
         }
 
+        //draws the entire menu
         public void DrawMenu(SpriteBatch spriteBatch, SpriteFont spriteFont, Texture2D texture)
         {
             DrawText(spriteBatch,spriteFont);
             DrawLine(spriteBatch, texture);
         }
 
+        //bool used to start the game
         public bool StartGame()
         {
             if (kState.IsKeyDown(Keys.Space) == true && y1 == 200)
@@ -201,6 +212,7 @@ namespace Glitch
             }
         }
 
+        //bool used to show instructions
         public bool Instructions()
         {
             if (kState.IsKeyDown(Keys.Space) == true && y1 == 275)
@@ -213,6 +225,7 @@ namespace Glitch
             }
         }
 
+        //used to quit the game
         public bool EndGame()
         {
             if (kState.IsKeyDown(Keys.Space) == true && y1 == 350)

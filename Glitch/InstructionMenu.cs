@@ -14,13 +14,10 @@ namespace Glitch
 {
     class InstructionMenu
     {
+        //attribute for the keyboard input
         KeyboardState kState;
 
-        public void UpdateMenu()
-        {
-            kState = Keyboard.GetState();
-        }
-
+        //draws text for instructions
         protected void DrawText(SpriteBatch spriteBatch, SpriteFont font)
         {
             spriteBatch.Begin();
@@ -85,24 +82,16 @@ namespace Glitch
                 SpriteEffects.None,
                 0);
 
-            spriteBatch.DrawString(font,
-                "press any key to continue...",
-                new Vector2(275, 450),
-                Color.Black,
-                0f,
-                new Vector2(0, 0),
-                0.75f,
-                SpriteEffects.None,
-                0);
-
             spriteBatch.End();
         }
 
+        //draws the menu on screen
         public void DrawMenu(SpriteBatch spriteBatch, SpriteFont spriteFont, Texture2D texture)
         {
             DrawText(spriteBatch, spriteFont);
         }
 
+        //bool used to switch game states
         public bool DoneWithInstructions()
         {
             if (kState.GetPressedKeys().Length > 0)

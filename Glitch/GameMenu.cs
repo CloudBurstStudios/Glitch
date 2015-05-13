@@ -14,17 +14,19 @@ namespace Glitch
 {
     class GameMenu
     {
-        
+        //attributes
         SpriteEffects spritEffects = SpriteEffects.None;
         bool[] dir = { false, false };
         private int score = 0;
 
+        //property for score
         public int Score
         {
             get { return score; }
             set { score = value; }
         }
 
+        //draws text on screen
         public void DrawText(SpriteBatch spriteBatch, SpriteFont font)
         {
             spriteBatch.Begin();
